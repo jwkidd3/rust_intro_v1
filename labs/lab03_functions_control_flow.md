@@ -281,18 +281,17 @@ fn main() {
     let guesses = [30, 50, 42, 45];
 
     for guess in guesses {
-        let result = check_guess(guess, secret);
-        println!("Guess {}: {}", guess, result);
+        check_guess(guess, secret);
     }
 }
 
-fn check_guess(guess: i32, secret: i32) -> &'static str {
+fn check_guess(guess: i32, secret: i32) {
     if guess < secret {
-        "Too low!"
+        println!("Guess {}: Too low!", guess);
     } else if guess > secret {
-        "Too high!"
+        println!("Guess {}: Too high!", guess);
     } else {
-        "Correct!"
+        println!("Guess {}: Correct!", guess);
     }
 }
 ```

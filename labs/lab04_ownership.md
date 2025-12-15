@@ -196,30 +196,35 @@ fn calculate_length(s: String) -> (String, usize) {
 
 ### Exercise 10: Ownership Challenge
 
-Fix the following code:
+Fix the following code so it compiles:
 
 ```rust
 fn main() {
-    let strings = create_strings();
+    let s1 = String::from("hello");
+    let s2 = String::from("world");
 
-    for s in &strings {
-        print_string(s.clone());  // Clone to avoid move
-    }
+    // We want to print both strings and still use them after
+    print_string(s1.clone());  // Clone to keep ownership
+    print_string(s2.clone());
 
-    // strings is still valid here
-    println!("Created {} strings", strings.len());
-}
+    // Both strings still valid here
+    println!("s1: {}, s2: {}", s1, s2);
 
-fn create_strings() -> Vec<String> {
-    let mut v = Vec::new();
-    v.push(String::from("apple"));
-    v.push(String::from("banana"));
-    v.push(String::from("cherry"));
-    v
+    // Now transfer ownership
+    let s3 = combine_strings(s1, s2);
+    // s1 and s2 are no longer valid
+    println!("Combined: {}", s3);
 }
 
 fn print_string(s: String) {
-    println!("Fruit: {}", s);
+    println!("String: {}", s);
+}
+
+fn combine_strings(a: String, b: String) -> String {
+    let mut result = a;
+    result.push_str(" ");
+    result.push_str(&b);
+    result
 }
 ```
 

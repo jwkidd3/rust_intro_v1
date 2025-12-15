@@ -135,25 +135,24 @@ fn main() {
     let value = result.unwrap_or(0);
     println!("unwrap_or: {}", value);
 
-    // unwrap_or_else: compute default lazily
+    // Handle error with match to compute default
     let result: Result<i32, &str> = Err("error");
-    let value = result.unwrap_or_else(|e| {
-        println!("Error was: {}", e);
-        -1
-    });
-    println!("unwrap_or_else: {}", value);
+    let value = match result {
+        Ok(v) => v,
+        Err(e) => {
+            println!("Error was: {}", e);
+            -1
+        }
+    };
+    println!("error handled: {}", value);
 
-    // map: transform Ok value
+    // Transform Result value using match
     let result: Result<i32, &str> = Ok(5);
-    let doubled = result.map(|x| x * 2);
-    println!("mapped: {:?}", doubled);
-
-    // and_then: chain operations
-    let result: Result<i32, &str> = Ok(5);
-    let chained = result
-        .map(|x| x * 2)
-        .and_then(|x| if x > 5 { Ok(x) } else { Err("too small") });
-    println!("chained: {:?}", chained);
+    let doubled = match result {
+        Ok(x) => Ok(x * 2),
+        Err(e) => Err(e),
+    };
+    println!("doubled: {:?}", doubled);
 
     // is_ok and is_err
     let ok: Result<i32, &str> = Ok(5);

@@ -179,15 +179,12 @@ fn main() {
     println!("some_value is_some: {}", some_value.is_some());
     println!("no_value is_none: {}", no_value.is_none());
 
-    // map: transform the inner value
-    let doubled = some_value.map(|x| x * 2);
+    // Transform Option value using match
+    let doubled = match some_value {
+        Some(x) => Some(x * 2),
+        None => None,
+    };
     println!("doubled: {:?}", doubled);
-
-    // and_then: chain operations that return Option
-    let result = some_value
-        .map(|x| x * 2)
-        .map(|x| x + 1);
-    println!("chained: {:?}", result);
 }
 ```
 

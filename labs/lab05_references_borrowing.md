@@ -165,14 +165,18 @@ fn main() {
 
 fn first_word(s: &str) -> &str {
     let bytes = s.as_bytes();
+    let mut space_index = s.len();
 
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &s[0..i];
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b' ' {
+            space_index = i;
+            break;
         }
+        i += 1;
     }
 
-    &s[..]
+    &s[0..space_index]
 }
 ```
 

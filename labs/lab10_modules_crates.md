@@ -328,36 +328,25 @@ pub mod advanced {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+// Tests will be covered in Lab 12
+```
 
-    #[test]
-    fn test_add() {
-        assert_eq!(add(2, 3), 5);
-    }
+To verify your library works, create a `src/main.rs` in the same project:
 
-    #[test]
-    fn test_multiply() {
-        assert_eq!(multiply(3, 4), 12);
-    }
+```rust
+use mymath::{add, multiply, advanced};
 
-    #[test]
-    fn test_factorial() {
-        assert_eq!(advanced::factorial(5), 120);
-    }
-
-    #[test]
-    fn test_is_prime() {
-        assert!(advanced::is_prime(7));
-        assert!(!advanced::is_prime(4));
-    }
+fn main() {
+    println!("2 + 3 = {}", add(2, 3));
+    println!("3 * 4 = {}", multiply(3, 4));
+    println!("5! = {}", advanced::factorial(5));
+    println!("Is 7 prime? {}", advanced::is_prime(7));
 }
 ```
 
-Run tests:
+Run with:
 ```bash
-cargo test
+cargo run
 ```
 
 To use this library in another project, add to that project's `Cargo.toml`:
@@ -376,7 +365,6 @@ mymath = { path = "../mymath" }
 - [ ] Created nested module structure
 - [ ] Added external crate dependency
 - [ ] Created a library crate
-- [ ] Wrote documentation comments
 
 ## Lab Questions
 
@@ -420,4 +408,4 @@ You have completed Lab 10 when you can:
 - Organize code into modules
 - Control visibility with pub
 - Use external crates from crates.io
-- Create a library crate with tests
+- Create a library crate
