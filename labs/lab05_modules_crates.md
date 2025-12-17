@@ -220,7 +220,7 @@ Edit `Cargo.toml`:
 
 ```toml
 [package]
-name = "lab03_modules"
+name = "lab05_modules"
 version = "0.1.0"
 edition = "2021"
 
