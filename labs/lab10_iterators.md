@@ -18,10 +18,10 @@
 
 ## Setup
 
-Continue in the same project or create a new one:
+Create a new project:
 ```bash
-cargo new lab06b_iterators
-cd lab06b_iterators
+cargo new lab10_iterators
+cd lab10_iterators
 code .
 ```
 

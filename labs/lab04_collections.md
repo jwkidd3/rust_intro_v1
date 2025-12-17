@@ -19,8 +19,8 @@
 
 Create a new project:
 ```bash
-cargo new lab02c_collections
-cd lab02c_collections
+cargo new lab04_collections
+cd lab04_collections
 code .
 ```
 

@@ -20,8 +20,8 @@
 
 Create a new project:
 ```bash
-cargo new lab04_errors
-cd lab04_errors
+cargo new lab06_errors
+cd lab06_errors
 code .
 ```
 

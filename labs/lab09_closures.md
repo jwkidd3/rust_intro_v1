@@ -19,8 +19,8 @@
 
 Create a new project:
 ```bash
-cargo new lab06_functional
-cd lab06_functional
+cargo new lab09_closures
+cd lab09_closures
 code .
 ```
 

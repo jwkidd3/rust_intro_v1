@@ -21,8 +21,8 @@
 ### Step 1: Create a new project
 
 ```bash
-cargo new lab03_modules
-cd lab03_modules
+cargo new lab05_modules
+cd lab05_modules
 code .
 ```
 

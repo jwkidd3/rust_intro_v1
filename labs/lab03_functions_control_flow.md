@@ -18,10 +18,10 @@
 
 ## Setup
 
-Create a new project or continue in the same project:
+Create a new project:
 ```bash
-cargo new lab02b_functions
-cd lab02b_functions
+cargo new lab03_functions
+cd lab03_functions
 code .
 ```
 

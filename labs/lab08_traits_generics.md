@@ -18,10 +18,10 @@
 
 ## Setup
 
-Continue in the same project or create a new one:
+Create a new project:
 ```bash
-cargo new lab05b_traits
-cd lab05b_traits
+cargo new lab08_traits
+cd lab08_traits
 code .
 ```
 
