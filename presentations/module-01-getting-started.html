@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Module 1: Getting Started with Rust</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <style>
+        :root {
+            --r-heading-color: #2c3e50;
+            --r-main-color: #333;
+            --r-link-color: #e67e22;
+            --r-background-color: #fff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: var(--r-heading-color); }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.4em; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal pre { width: 100%; font-size: 0.48em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .reveal pre code { max-height: 380px; padding: 15px; }
+        .reveal ul, .reveal ol { font-size: 0.75em; }
+        .reveal li { margin-bottom: 0.4em; }
+        .reveal table { font-size: 0.65em; }
+        .reveal blockquote { font-size: 0.8em; background: #f9f9f9; border-left: 4px solid #e67e22; padding: 0.5em 1em; }
+        .reveal .small-code pre { font-size: 0.42em; }
+        .reveal .small-code pre code { max-height: 340px; }
+        .two-columns { display: flex; gap: 2em; }
+        .two-columns > * { flex: 1; }
+        .reveal section p { font-size: 0.75em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Module 1</h1>
+                <h2>Getting Started with Rust</h2>
+                <p>Introduction to Rust Programming</p>
+            </section>
+
+            <!-- Overview -->
+            <section>
+                <h2>Module Overview</h2>
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Understand what Rust is and why it matters</li>
+                    <li>Install the Rust toolchain with rustup</li>
+                    <li>Learn the Cargo build tool and package manager</li>
+                    <li>Create and run your first Rust program</li>
+                    <li>Set up your IDE with rust-analyzer</li>
+                </ul>
+            </section>
+
+            <!-- Section 1: What is Rust? -->
+            <section>
+                <section>
+                    <h2>Section 1</h2>
+                    <h3>What is Rust?</h3>
+                </section>
+
+                <section>
+                    <h3>A Systems Programming Language</h3>
+                    <p>Rust focuses on three core principles:</p>
+                    <ul>
+                        <li><strong>Safety</strong> - Memory safety without garbage collection</li>
+                        <li><strong>Speed</strong> - Zero-cost abstractions, no runtime overhead</li>
+                        <li><strong>Concurrency</strong> - Fearless concurrent programming</li>
+                    </ul>
+                    <blockquote>Created by Mozilla Research in 2010, first stable release in 2015</blockquote>
+                </section>
+
+                <section>
+                    <h3>What Can I Do with Rust?</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Domain</th><th>Examples</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Systems Programming</td><td>Operating systems, device drivers, embedded</td></tr>
+                            <tr><td>Web Development</td><td>Backend services (actix-web, axum), WebAssembly</td></tr>
+                            <tr><td>Command Line Tools</td><td>ripgrep, exa, bat</td></tr>
+                            <tr><td>Production Use</td><td>Firefox, Linux kernel, Discord, Cloudflare, AWS</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Why Rust?</h3>
+                    <p><strong>The Problem with C/C++:</strong></p>
+                    <ul>
+                        <li>Manual memory management</li>
+                        <li>Buffer overflows, use-after-free bugs</li>
+                        <li>~70% of security vulnerabilities are memory issues</li>
+                    </ul>
+                    <p><strong>Rust's Solution:</strong></p>
+                    <ul>
+                        <li>Compile-time memory safety guarantees</li>
+                        <li>No null pointers, no dangling references</li>
+                        <li>Same performance as C/C++</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Section 2: Rust Toolchain -->
+            <section>
+                <section>
+                    <h2>Section 2</h2>
+                    <h3>The Rust Toolchain</h3>
+                </section>
+
+                <section>
+                    <h3>What Tools Do I Need?</h3>
+                    <pre><code class="text" data-trim>
+┌─────────────────────────────────────────────────────────┐
+│                    Rust Toolchain                        │
+├─────────────────────────────────────────────────────────┤
+│  rustup    │ Toolchain installer and manager            │
+│            │ Installs and updates Rust                  │
+├────────────┼────────────────────────────────────────────┤
+│  rustc     │ The Rust compiler                          │
+│            │ Compiles source code to executables        │
+├────────────┼────────────────────────────────────────────┤
+│  cargo     │ Package manager and build tool             │
+│            │ Creates projects, manages dependencies     │
+└────────────┴────────────────────────────────────────────┘
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Installing Rust</h3>
+                    <p><strong>macOS / Linux:</strong></p>
+                    <pre><code class="bash" data-trim>
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+                    </code></pre>
+                    <p><strong>Windows:</strong></p>
+                    <ul>
+                        <li>Download rustup-init.exe from https://rustup.rs</li>
+                    </ul>
+                    <p><strong>Verify installation:</strong></p>
+                    <pre><code class="bash" data-trim>
+rustc --version
+cargo --version
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>IDE Setup</h3>
+                    <p><strong>Recommended: VS Code + rust-analyzer</strong></p>
+                    <ol>
+                        <li>Install Visual Studio Code</li>
+                        <li>Install rust-analyzer extension</li>
+                        <li>Open a Rust project folder</li>
+                    </ol>
+                    <p><strong>Features:</strong></p>
+                    <ul>
+                        <li>Code completion</li>
+                        <li>Inline type hints</li>
+                        <li>Error highlighting</li>
+                        <li>Go to definition</li>
+                    </ul>
+                    <blockquote>Alternatives: IntelliJ IDEA + Rust plugin, vim/neovim</blockquote>
+                </section>
+            </section>
+
+            <!-- Section 3: Cargo -->
+            <section>
+                <section>
+                    <h2>Section 3</h2>
+                    <h3>Cargo - The Build Tool</h3>
+                </section>
+
+                <section>
+                    <h3>Creating a Project</h3>
+                    <pre><code class="bash" data-trim>
+cargo new hello_rust
+cd hello_rust
+                    </code></pre>
+                    <p><strong>Project structure:</strong></p>
+                    <pre><code class="text" data-trim>
+hello_rust/
+├── Cargo.toml    # Project manifest
+└── src/
+    └── main.rs   # Source code
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Cargo.toml</h3>
+                    <pre><code class="toml" data-trim>
+[package]
+name = "hello_rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# External crates go here
+                    </code></pre>
+                    <p><strong>Key sections:</strong></p>
+                    <ul>
+                        <li><code>[package]</code> - Project metadata</li>
+                        <li><code>[dependencies]</code> - External libraries</li>
+                        <li><code>edition</code> - Rust edition (2015, 2018, 2021)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Hello World</h3>
+                    <p><strong>src/main.rs:</strong></p>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    println!("Hello, world!");
+}
+                    </code></pre>
+                    <p><strong>Key observations:</strong></p>
+                    <ul>
+                        <li><code>fn</code> defines a function</li>
+                        <li><code>main</code> is the entry point</li>
+                        <li><code>println!</code> is a macro (note the <code>!</code>)</li>
+                        <li>Statements end with semicolons</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Building and Running</h3>
+                    <pre><code class="bash" data-trim>
+# Build only
+cargo build
+
+# Build and run
+cargo run
+
+# Check without building (fast)
+cargo check
+                    </code></pre>
+                    <blockquote><strong>Tip:</strong> <code>cargo check</code> is faster - useful during development</blockquote>
+                </section>
+
+                <section>
+                    <h3>Debug vs Release</h3>
+                    <div class="two-columns">
+                        <div>
+                            <p><strong>Debug build (default):</strong></p>
+                            <pre><code class="bash" data-trim>
+cargo build
+                            </code></pre>
+                            <ul>
+                                <li>Fast compilation</li>
+                                <li>No optimizations</li>
+                                <li>Output: <code>target/debug/</code></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>Release build:</strong></p>
+                            <pre><code class="bash" data-trim>
+cargo build --release
+                            </code></pre>
+                            <ul>
+                                <li>Slower compilation</li>
+                                <li>Full optimizations</li>
+                                <li>Output: <code>target/release/</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Cargo Commands Summary</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Command</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>cargo new &lt;name&gt;</code></td><td>Create new project</td></tr>
+                            <tr><td><code>cargo build</code></td><td>Compile the project</td></tr>
+                            <tr><td><code>cargo run</code></td><td>Compile and run</td></tr>
+                            <tr><td><code>cargo check</code></td><td>Check for errors (fast)</td></tr>
+                            <tr><td><code>cargo test</code></td><td>Run tests</td></tr>
+                            <tr><td><code>cargo doc</code></td><td>Generate documentation</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+            <!-- Lab 1 -->
+            <section>
+                <section>
+                    <h2>Lab 1</h2>
+                    <h3>Environment Setup</h3>
+                </section>
+                <section>
+                    <h3>Lab 1: Environment Setup</h3>
+                    <p>You will set up your Rust development environment:</p>
+                    <ul>
+                        <li>Install Rust using rustup</li>
+                        <li>Configure VS Code with rust-analyzer</li>
+                        <li>Create your first Cargo project</li>
+                        <li>Build and run a program</li>
+                        <li>Explore Cargo commands</li>
+                    </ul>
+                    <p><strong>Time:</strong> 30 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab01_environment_setup/</code></p>
+                </section>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <section>
+                    <h2>Module 1 Summary</h2>
+                    <h3>Key Takeaways</h3>
+                    <ol>
+                        <li><strong>Rust provides memory safety</strong> without garbage collection</li>
+                        <li><strong>rustup</strong> manages the Rust toolchain</li>
+                        <li><strong>Cargo</strong> is the build tool and package manager</li>
+                        <li><strong>Projects have a standard structure</strong> (Cargo.toml + src/)</li>
+                        <li>Use <strong>cargo run</strong> for quick iteration</li>
+                        <li>Use <strong>cargo check</strong> for fast error checking</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Resources</h2>
+                    <ul>
+                        <li>The Rust Book: https://doc.rust-lang.org/book/</li>
+                        <li>Rust by Example: https://doc.rust-lang.org/rust-by-example/</li>
+                        <li>Rust Playground: https://play.rust-lang.org/</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <h3>Next Module: Rust Language Essentials</h3>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            plugins: [ RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

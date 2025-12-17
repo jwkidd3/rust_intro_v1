@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Module 2: Rust Language Essentials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <style>
+        :root {
+            --r-heading-color: #2c3e50;
+            --r-main-color: #333;
+            --r-link-color: #e67e22;
+            --r-background-color: #fff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: var(--r-heading-color); }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.4em; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal pre { width: 100%; font-size: 0.48em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .reveal pre code { max-height: 380px; padding: 15px; }
+        .reveal ul, .reveal ol { font-size: 0.75em; }
+        .reveal li { margin-bottom: 0.4em; }
+        .reveal table { font-size: 0.65em; }
+        .reveal blockquote { font-size: 0.8em; background: #f9f9f9; border-left: 4px solid #e67e22; padding: 0.5em 1em; }
+        .reveal .small-code pre { font-size: 0.42em; }
+        .reveal .small-code pre code { max-height: 340px; }
+        .two-columns { display: flex; gap: 2em; }
+        .two-columns > * { flex: 1; }
+        .reveal section p { font-size: 0.75em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Module 2</h1>
+                <h2>Rust Language Essentials</h2>
+                <p>Introduction to Rust Programming</p>
+            </section>
+
+            <!-- Overview -->
+            <section>
+                <h2>Module Overview</h2>
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Variables, mutability, and constants</li>
+                    <li>Scalar and compound data types</li>
+                    <li>Control flow: if/else, loops</li>
+                    <li>Functions and expressions</li>
+                    <li>Collections: Vec, String, HashMap</li>
+                </ul>
+            </section>
+
+            <!-- Section 1: Variables and Types -->
+            <section>
+                <section>
+                    <h2>Section 1</h2>
+                    <h3>Variables and Types</h3>
+                </section>
+
+                <section>
+                    <h3>Variables in Rust</h3>
+                    <p><strong>Variables are immutable by default!</strong></p>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let x = 5;
+    println!("x = {}", x);
+
+    // x = 6;  // ERROR: cannot assign twice to immutable variable
+}
+                    </code></pre>
+                    <p><strong>Why?</strong></p>
+                    <ul>
+                        <li>Prevents accidental mutations</li>
+                        <li>Enables compiler optimizations</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Mutable Variables</h3>
+                    <p>Use <code>mut</code> to make a variable mutable:</p>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let mut x = 5;
+    println!("x = {}", x);
+
+    x = 6;  // OK: x is mutable
+    println!("x = {}", x);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Constants</h3>
+                    <pre><code class="rust" data-trim>
+const MAX_POINTS: u32 = 100_000;
+const PI: f64 = 3.14159;
+
+fn main() {
+    println!("Max points: {}", MAX_POINTS);
+}
+                    </code></pre>
+                    <p><strong>Rules:</strong></p>
+                    <ul>
+                        <li>Must have type annotation</li>
+                        <li>Use SCREAMING_SNAKE_CASE</li>
+                        <li>Can be declared in any scope</li>
+                        <li>Always immutable</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Shadowing</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let x = 5;
+    let x = x + 1;      // Shadows previous x
+    let x = x * 2;      // Shadows again
+
+    println!("x = {}", x);  // Prints: x = 12
+}
+                    </code></pre>
+                    <p><strong>Shadowing allows type changes:</strong></p>
+                    <pre><code class="rust" data-trim>
+let spaces = "   ";        // &str
+let spaces = spaces.len(); // usize
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Integer Types</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Length</th><th>Signed</th><th>Unsigned</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>8-bit</td><td>i8</td><td>u8</td></tr>
+                            <tr><td>16-bit</td><td>i16</td><td>u16</td></tr>
+                            <tr><td>32-bit</td><td>i32</td><td>u32</td></tr>
+                            <tr><td>64-bit</td><td>i64</td><td>u64</td></tr>
+                            <tr><td>128-bit</td><td>i128</td><td>u128</td></tr>
+                            <tr><td>arch</td><td>isize</td><td>usize</td></tr>
+                        </tbody>
+                    </table>
+                    <blockquote><strong>Default:</strong> <code>i32</code></blockquote>
+                </section>
+
+                <section>
+                    <h3>Integer Literals</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let decimal = 98_222;      // Underscores for readability
+    let hex = 0xff;            // Hexadecimal
+    let octal = 0o77;          // Octal
+    let binary = 0b1111_0000;  // Binary
+    let byte = b'A';           // Byte (u8 only)
+
+    let x = 42u32;             // Type suffix
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Floating-Point and Boolean</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    // Floating-point
+    let x = 2.0;      // f64 (default)
+    let y: f32 = 3.0; // f32
+
+    // Boolean - 1 byte
+    let t = true;
+    let f: bool = false;
+
+    // Character - 4 bytes (Unicode)
+    let c = 'z';
+    let heart = '❤';
+    let emoji = '🦀';
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Tuples</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    // Destructuring
+    let (x, y, z) = tup;
+
+    // Access by index
+    let five_hundred = tup.0;
+    let six_point_four = tup.1;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Arrays</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+    let b: [i32; 5] = [1, 2, 3, 4, 5];
+    let c = [3; 5];  // [3, 3, 3, 3, 3]
+
+    let first = a[0];
+    let second = a[1];
+
+    println!("Length: {}", a.len());
+}
+                    </code></pre>
+                    <blockquote>Arrays have fixed size. For dynamic arrays, use <code>Vec</code></blockquote>
+                </section>
+            </section>
+
+            <!-- Section 2: Control Flow -->
+            <section>
+                <section>
+                    <h2>Section 2</h2>
+                    <h3>Control Flow</h3>
+                </section>
+
+                <section>
+                    <h3>if Expressions</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let number = 7;
+
+    if number < 5 {
+        println!("less than 5");
+    } else if number < 10 {
+        println!("between 5 and 10");
+    } else {
+        println!("10 or greater");
+    }
+}
+                    </code></pre>
+                    <blockquote><strong>Note:</strong> Condition must be <code>bool</code></blockquote>
+                </section>
+
+                <section>
+                    <h3>if as an Expression</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 };
+
+    println!("number = {}", number);
+}
+                    </code></pre>
+                    <p><strong>Both branches must return the same type</strong></p>
+                </section>
+
+                <section>
+                    <h3>loop</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+        if counter == 10 {
+            break counter * 2;  // Returns 20
+        }
+    };
+
+    println!("Result: {}", result);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>while Loop</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let mut number = 3;
+
+    while number != 0 {
+        println!("{}!", number);
+        number -= 1;
+    }
+
+    println!("LIFTOFF!");
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>for Loop</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a {
+        println!("Value: {}", element);
+    }
+
+    // With range
+    for i in 1..4 {
+        println!("{}", i);  // 1, 2, 3
+    }
+
+    // Inclusive range
+    for i in 1..=4 {
+        println!("{}", i);  // 1, 2, 3, 4
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>break and continue</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    for i in 1..10 {
+        if i == 3 {
+            continue;  // Skip this iteration
+        }
+        if i == 7 {
+            break;     // Exit the loop
+        }
+        println!("{}", i);
+    }
+}
+// Output: 1, 2, 4, 5, 6
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 3: Functions -->
+            <section>
+                <section>
+                    <h2>Section 3</h2>
+                    <h3>Functions</h3>
+                </section>
+
+                <section>
+                    <h3>Function Syntax</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    greet();
+    print_value(42);
+    let sum = add(3, 4);
+    println!("Sum: {}", sum);
+}
+
+fn greet() {
+    println!("Hello!");
+}
+
+fn print_value(x: i32) {
+    println!("Value: {}", x);
+}
+
+fn add(a: i32, b: i32) -> i32 {
+    a + b  // No semicolon = return value
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Statements vs Expressions</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    // Statement - ends with semicolon, no value
+    let x = 5;
+
+    // Expression - evaluates to a value
+    let y = {
+        let a = 3;
+        a + 1  // No semicolon - returns 4
+    };
+
+    println!("y = {}", y);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Return Values</h3>
+                    <pre><code class="rust" data-trim>
+fn five() -> i32 {
+    5  // Implicit return
+}
+
+fn absolute(x: i32) -> i32 {
+    if x < 0 {
+        return -x;  // Early return
+    }
+    x
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Lab 2 -->
+            <section>
+                <section>
+                    <h2>Lab 2</h2>
+                    <h3>Variables and Types</h3>
+                </section>
+                <section>
+                    <h3>Lab 2: Variables and Types</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Declaring variables and using mutability</li>
+                        <li>Working with different data types</li>
+                        <li>Using tuples and arrays</li>
+                        <li>Type inference and annotations</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab02_variables_types/</code></p>
+                </section>
+            </section>
+
+            <!-- Lab 3 -->
+            <section>
+                <section>
+                    <h2>Lab 3</h2>
+                    <h3>Functions and Control Flow</h3>
+                </section>
+                <section>
+                    <h3>Lab 3: Functions and Control Flow</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Writing functions with parameters</li>
+                        <li>Using if/else expressions</li>
+                        <li>Working with loops (loop, while, for)</li>
+                        <li>Returning values from functions</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab03_functions_control_flow/</code></p>
+                </section>
+            </section>
+
+            <!-- Section 4: Collections -->
+            <section>
+                <section>
+                    <h2>Section 4</h2>
+                    <h3>Collections</h3>
+                </section>
+
+                <section>
+                    <h3>Vec&lt;T&gt; - Dynamic Array</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let mut v: Vec<i32> = Vec::new();
+    v.push(1);
+    v.push(2);
+    v.push(3);
+
+    // Or use vec! macro
+    let v2 = vec![1, 2, 3];
+
+    println!("{:?}", v);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Accessing Vector Elements</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3, 4, 5];
+
+    let third = v[2];           // Panics if out of bounds
+    let third = v.get(2);       // Returns Option<&T>
+
+    match v.get(2) {
+        Some(value) => println!("Third: {}", value),
+        None => println!("No third element"),
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Iterating Over Vectors</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![10, 20, 30];
+
+    for value in &v {
+        println!("{}", value);
+    }
+
+    // Mutable iteration
+    let mut v2 = vec![1, 2, 3];
+    for value in &mut v2 {
+        *value *= 2;
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>String</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let mut s = String::new();
+    s.push_str("hello");
+    s.push(' ');
+    s.push_str("world");
+
+    // From literal
+    let s2 = String::from("hello");
+    let s3 = "hello".to_string();
+
+    println!("{}", s);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>String Operations</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("world!");
+    let s3 = s1 + &s2;  // s1 is moved
+
+    // Or use format!
+    let s4 = String::from("Hello");
+    let s5 = String::from("world");
+    let s6 = format!("{}, {}!", s4, s5);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>HashMap</h3>
+                    <pre><code class="rust" data-trim>
+use std::collections::HashMap;
+
+fn main() {
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Red"), 50);
+
+    let team = String::from("Blue");
+    let score = scores.get(&team);  // Option<&V>
+
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Lab 4 -->
+            <section>
+                <section>
+                    <h2>Lab 4</h2>
+                    <h3>Collections</h3>
+                </section>
+                <section>
+                    <h3>Lab 4: Collections</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Creating and modifying Vectors</li>
+                        <li>Working with Strings</li>
+                        <li>Using HashMaps for key-value storage</li>
+                        <li>Iterating over collections</li>
+                    </ul>
+                    <p><strong>Time:</strong> 30 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab04_collections/</code></p>
+                </section>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <section>
+                    <h2>Module 2 Summary</h2>
+                    <h3>Key Takeaways</h3>
+                    <ol>
+                        <li><strong>Variables are immutable by default</strong> - use <code>mut</code> for mutability</li>
+                        <li><strong>Scalar types:</strong> integers, floats, booleans, characters</li>
+                        <li><strong>Compound types:</strong> tuples (mixed), arrays (same type, fixed)</li>
+                        <li><strong>if/else are expressions</strong> - can return values</li>
+                        <li><strong>Three loop types:</strong> <code>loop</code>, <code>while</code>, <code>for</code></li>
+                        <li><strong>Functions</strong> use <code>fn</code>, return with no semicolon</li>
+                        <li><strong>Collections:</strong> <code>Vec&lt;T&gt;</code>, <code>String</code>, <code>HashMap&lt;K,V&gt;</code></li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <h3>Next Module: Organizing Rust Code</h3>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            plugins: [ RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Module 3: Organizing Rust Code</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <style>
+        :root {
+            --r-heading-color: #2c3e50;
+            --r-main-color: #333;
+            --r-link-color: #e67e22;
+            --r-background-color: #fff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: var(--r-heading-color); }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.4em; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal pre { width: 100%; font-size: 0.48em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .reveal pre code { max-height: 380px; padding: 15px; }
+        .reveal ul, .reveal ol { font-size: 0.75em; }
+        .reveal li { margin-bottom: 0.4em; }
+        .reveal table { font-size: 0.65em; }
+        .reveal blockquote { font-size: 0.8em; background: #f9f9f9; border-left: 4px solid #e67e22; padding: 0.5em 1em; }
+        .reveal .small-code pre { font-size: 0.42em; }
+        .reveal .small-code pre code { max-height: 340px; }
+        .two-columns { display: flex; gap: 2em; }
+        .two-columns > * { flex: 1; }
+        .reveal section p { font-size: 0.75em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Module 3</h1>
+                <h2>Organizing Rust Code</h2>
+                <p>Introduction to Rust Programming</p>
+            </section>
+
+            <!-- Overview -->
+            <section>
+                <h2>Module Overview</h2>
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Understand packages, crates, and modules</li>
+                    <li>Control visibility with <code>pub</code></li>
+                    <li>Use the <code>use</code> keyword to bring items into scope</li>
+                    <li>Organize code across multiple files</li>
+                    <li>Add external dependencies with Cargo</li>
+                </ul>
+            </section>
+
+            <!-- Section 1: Module System -->
+            <section>
+                <section>
+                    <h2>Section 1</h2>
+                    <h3>The Module System</h3>
+                </section>
+
+                <section>
+                    <h3>Module System Overview</h3>
+                    <pre><code class="text" data-trim>
+┌─────────────────────────────────────────────────────────┐
+│                 Rust's Module System                     │
+├─────────────┬───────────────────────────────────────────┤
+│  Packages   │ Cargo feature, contains crates            │
+├─────────────┼───────────────────────────────────────────┤
+│  Crates     │ Compilation unit (binary or library)      │
+├─────────────┼───────────────────────────────────────────┤
+│  Modules    │ Organize code within a crate              │
+├─────────────┼───────────────────────────────────────────┤
+│  Paths      │ Name items in the module tree             │
+└─────────────┴───────────────────────────────────────────┘
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Packages and Crates</h3>
+                    <p><strong>Package:</strong></p>
+                    <ul>
+                        <li>Created by <code>cargo new</code></li>
+                        <li>Contains a <code>Cargo.toml</code></li>
+                        <li>Can have multiple crates</li>
+                    </ul>
+                    <p><strong>Crate Types:</strong></p>
+                    <ul>
+                        <li><strong>Binary crate</strong> - has <code>main.rs</code>, compiles to executable</li>
+                        <li><strong>Library crate</strong> - has <code>lib.rs</code>, used by other code</li>
+                    </ul>
+                    <pre><code class="bash" data-trim>
+cargo new my_app          # Binary crate
+cargo new my_lib --lib    # Library crate
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Defining Modules</h3>
+                    <pre><code class="rust" data-trim>
+// In src/main.rs or src/lib.rs
+
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {
+            println!("Added to waitlist");
+        }
+    }
+
+    mod serving {
+        fn take_order() {}
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Module Tree</h3>
+                    <pre><code class="text" data-trim>
+crate (root)
+ └── front_of_house
+     ├── hosting
+     │   └── add_to_waitlist
+     └── serving
+         └── take_order
+                    </code></pre>
+                    <blockquote>Like a filesystem directory structure</blockquote>
+                </section>
+            </section>
+
+            <!-- Section 2: Visibility -->
+            <section>
+                <section>
+                    <h2>Section 2</h2>
+                    <h3>Visibility and Paths</h3>
+                </section>
+
+                <section>
+                    <h3>Visibility with pub</h3>
+                    <p><strong>Items are private by default:</strong></p>
+                    <pre><code class="rust" data-trim>
+mod front_of_house {
+    pub mod hosting {        // Public module
+        pub fn add_to_waitlist() {}  // Public function
+        fn seat_at_table() {}        // Private function
+    }
+}
+
+fn main() {
+    front_of_house::hosting::add_to_waitlist();  // OK
+    // front_of_house::hosting::seat_at_table(); // ERROR: private
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Paths to Items</h3>
+                    <pre><code class="rust" data-trim>
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+fn main() {
+    // Absolute path (from crate root)
+    crate::front_of_house::hosting::add_to_waitlist();
+
+    // Relative path
+    front_of_house::hosting::add_to_waitlist();
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>The use Keyword</h3>
+                    <p>Bring paths into scope:</p>
+                    <pre><code class="rust" data-trim>
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+use front_of_house::hosting;
+
+fn main() {
+    hosting::add_to_waitlist();
+    hosting::add_to_waitlist();
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>use with as</h3>
+                    <p>Rename imports:</p>
+                    <pre><code class="rust" data-trim>
+use std::fmt::Result;
+use std::io::Result as IoResult;
+
+fn function1() -> Result {
+    Ok(())
+}
+
+fn function2() -> IoResult<()> {
+    Ok(())
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Re-exporting with pub use</h3>
+                    <pre><code class="rust" data-trim>
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+// Re-export for cleaner public API
+pub use front_of_house::hosting;
+
+// External code can now use:
+// my_crate::hosting::add_to_waitlist()
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 3: Multiple Files -->
+            <section>
+                <section>
+                    <h2>Section 3</h2>
+                    <h3>Modules in Separate Files</h3>
+                </section>
+
+                <section>
+                    <h3>Separating Modules into Files</h3>
+                    <p><strong>Project structure:</strong></p>
+                    <pre><code class="text" data-trim>
+src/
+├── main.rs
+└── front_of_house.rs
+                    </code></pre>
+                    <p><strong>src/main.rs:</strong></p>
+                    <pre><code class="rust" data-trim>
+mod front_of_house;
+
+fn main() {
+    front_of_house::hosting::add_to_waitlist();
+}
+                    </code></pre>
+                    <p><strong>src/front_of_house.rs:</strong></p>
+                    <pre><code class="rust" data-trim>
+pub mod hosting {
+    pub fn add_to_waitlist() {}
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Nested Module Files</h3>
+                    <p><strong>For deeper nesting:</strong></p>
+                    <pre><code class="text" data-trim>
+src/
+├── main.rs
+├── front_of_house.rs
+└── front_of_house/
+    └── hosting.rs
+                    </code></pre>
+                    <p><strong>src/front_of_house.rs:</strong></p>
+                    <pre><code class="rust" data-trim>
+pub mod hosting;
+                    </code></pre>
+                    <p><strong>src/front_of_house/hosting.rs:</strong></p>
+                    <pre><code class="rust" data-trim>
+pub fn add_to_waitlist() {}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Project Structure Best Practices</h3>
+                    <pre><code class="text" data-trim>
+my_project/
+├── Cargo.toml
+├── Cargo.lock
+├── src/
+│   ├── main.rs        # Binary entry point
+│   ├── lib.rs         # Library root (optional)
+│   └── module_name/   # Module directory
+│       └── mod.rs
+├── tests/             # Integration tests
+├── examples/          # Example programs
+└── benches/           # Benchmarks
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 4: Cargo and Dependencies -->
+            <section>
+                <section>
+                    <h2>Section 4</h2>
+                    <h3>Cargo and Dependencies</h3>
+                </section>
+
+                <section>
+                    <h3>Cargo.toml</h3>
+                    <pre><code class="toml" data-trim>
+[package]
+name = "my_project"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Adding Dependencies</h3>
+                    <p>Find crates at <strong>https://crates.io</strong></p>
+                    <pre><code class="toml" data-trim>
+[dependencies]
+rand = "0.8"
+                    </code></pre>
+                    <p><strong>Using in code:</strong></p>
+                    <pre><code class="rust" data-trim>
+use rand::Rng;
+
+fn main() {
+    let n: i32 = rand::thread_rng().gen_range(1..=100);
+    println!("Random: {}", n);
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Cargo Commands</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Command</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>cargo new</code></td><td>Create new project</td></tr>
+                            <tr><td><code>cargo build</code></td><td>Compile project</td></tr>
+                            <tr><td><code>cargo run</code></td><td>Compile and run</td></tr>
+                            <tr><td><code>cargo test</code></td><td>Run tests</td></tr>
+                            <tr><td><code>cargo doc --open</code></td><td>Generate and view docs</td></tr>
+                            <tr><td><code>cargo update</code></td><td>Update dependencies</td></tr>
+                            <tr><td><code>cargo add &lt;crate&gt;</code></td><td>Add a dependency</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+            <!-- Lab 5 -->
+            <section>
+                <section>
+                    <h2>Lab 5</h2>
+                    <h3>Modules and Crates</h3>
+                </section>
+                <section>
+                    <h3>Lab 5: Modules and Crates</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Create modules in a single file</li>
+                        <li>Split modules into multiple files</li>
+                        <li>Control visibility with pub</li>
+                        <li>Add external crate dependencies</li>
+                        <li>Build a simple library crate</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab05_modules_crates/</code></p>
+                </section>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <section>
+                    <h2>Module 3 Summary</h2>
+                    <h3>Key Takeaways</h3>
+                    <ol>
+                        <li><strong>Packages</strong> contain crates, managed by Cargo</li>
+                        <li><strong>Crates</strong> are compilation units (binary or library)</li>
+                        <li><strong>Modules</strong> organize code with <code>mod</code></li>
+                        <li>Items are <strong>private by default</strong> - use <code>pub</code> to expose</li>
+                        <li><strong>use</strong> brings items into scope</li>
+                        <li><strong>Cargo.toml</strong> defines dependencies</li>
+                        <li><strong>crates.io</strong> is the package registry</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <h3>Next Module: Error Handling</h3>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            plugins: [ RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

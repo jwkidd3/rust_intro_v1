@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Module 6: Functional Programming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <style>
+        :root {
+            --r-heading-color: #2c3e50;
+            --r-main-color: #333;
+            --r-link-color: #e67e22;
+            --r-background-color: #fff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: var(--r-heading-color); }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.4em; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal pre { width: 100%; font-size: 0.48em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .reveal pre code { max-height: 380px; padding: 15px; }
+        .reveal ul, .reveal ol { font-size: 0.75em; }
+        .reveal li { margin-bottom: 0.4em; }
+        .reveal table { font-size: 0.65em; }
+        .reveal blockquote { font-size: 0.8em; background: #f9f9f9; border-left: 4px solid #e67e22; padding: 0.5em 1em; }
+        .reveal .small-code pre { font-size: 0.42em; }
+        .reveal .small-code pre code { max-height: 340px; }
+        .two-columns { display: flex; gap: 2em; }
+        .two-columns > * { flex: 1; }
+        .reveal section p { font-size: 0.75em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Module 6</h1>
+                <h2>Functional Programming</h2>
+                <p>Introduction to Rust Programming</p>
+            </section>
+
+            <!-- Overview -->
+            <section>
+                <h2>Module Overview</h2>
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Write closures (anonymous functions)</li>
+                    <li>Understand closure capture modes</li>
+                    <li>Work with iterators</li>
+                    <li>Use iterator adapters: map, filter, fold</li>
+                    <li>Chain functional operations</li>
+                </ul>
+            </section>
+
+            <!-- Section 1: Closures -->
+            <section>
+                <section>
+                    <h2>Section 1</h2>
+                    <h3>Closures</h3>
+                </section>
+
+                <section>
+                    <h3>What is Functional Programming?</h3>
+                    <p><strong>Core concepts:</strong></p>
+                    <ul>
+                        <li>Functions as first-class citizens</li>
+                        <li>Immutability preferred</li>
+                        <li>Avoid side effects</li>
+                        <li>Declarative over imperative</li>
+                    </ul>
+                    <p><strong>In Rust:</strong></p>
+                    <ul>
+                        <li>Closures (anonymous functions)</li>
+                        <li>Iterators</li>
+                        <li>Higher-order functions (map, filter, fold)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Closure Syntax</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    // Named function
+    fn add_one(x: i32) -> i32 {
+        x + 1
+    }
+
+    // Closure with full type annotations
+    let add_one = |x: i32| -> i32 { x + 1 };
+
+    // Closure with inferred types
+    let add_one = |x| x + 1;
+
+    println!("{}", add_one(5));  // 6
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Closure Variations</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    // Multiple parameters
+    let add = |x, y| x + y;
+
+    // Single expression (no braces needed)
+    let double = |x| x * 2;
+
+    // No parameters
+    let greet = || println!("Hello!");
+
+    greet();
+    println!("{}", add(2, 3));
+    println!("{}", double(5));
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Closures Capture Environment</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let factor = 10;
+
+    // Closure captures `factor` from environment
+    let scale = |x| x * factor;
+
+    println!("{}", scale(5));  // 50
+}
+                    </code></pre>
+                    <blockquote>Unlike regular functions, closures can use variables from their scope</blockquote>
+                </section>
+
+                <section>
+                    <h3>Capture Modes</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let s = String::from("hello");
+
+    // Borrow immutably
+    let print_s = || println!("{}", s);
+    print_s();
+    println!("{}", s);  // s still valid
+
+    // Borrow mutably
+    let mut count = 0;
+    let mut increment = || count += 1;
+    increment();
+    println!("{}", count);  // 1
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Move Closures</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let s = String::from("hello");
+
+    // Force ownership transfer with `move`
+    let consume = move || println!("{}", s);
+
+    consume();
+    // println!("{}", s);  // ERROR: s was moved
+}
+                    </code></pre>
+                    <p><strong>Use <code>move</code> when:</strong></p>
+                    <ul>
+                        <li>Passing closures to threads</li>
+                        <li>Closure needs to outlive current scope</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Closures as Parameters</h3>
+                    <pre><code class="rust" data-trim>
+fn apply<F>(f: F, value: i32) -> i32
+where
+    F: Fn(i32) -> i32,
+{
+    f(value)
+}
+
+fn main() {
+    let double = |x| x * 2;
+    let result = apply(double, 5);
+    println!("{}", result);  // 10
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Closure Traits</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Trait</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>Fn</code></td><td>Borrows captured values immutably</td></tr>
+                            <tr><td><code>FnMut</code></td><td>Borrows captured values mutably</td></tr>
+                            <tr><td><code>FnOnce</code></td><td>Takes ownership of captured values</td></tr>
+                        </tbody>
+                    </table>
+                    <pre><code class="rust" data-trim>
+fn call_once<F: FnOnce()>(f: F) {
+    f();
+}
+
+fn call_many<F: Fn()>(f: F) {
+    f();
+    f();
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 2: Iterators -->
+            <section>
+                <section>
+                    <h2>Section 2</h2>
+                    <h3>Iterators</h3>
+                </section>
+
+                <section>
+                    <h3>What are Iterators?</h3>
+                    <p><strong>A way to process sequences of elements:</strong></p>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3];
+
+    // Create an iterator
+    let iter = v.iter();
+
+    // Consume with for loop
+    for value in iter {
+        println!("{}", value);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Iterator Methods</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3];
+
+    // iter() - borrows, yields &T
+    for val in v.iter() {
+        println!("{}", val);
+    }
+
+    // iter_mut() - mutable borrow, yields &mut T
+    let mut v2 = vec![1, 2, 3];
+    for val in v2.iter_mut() {
+        *val *= 2;
+    }
+
+    // into_iter() - takes ownership, yields T
+    for val in v.into_iter() {
+        println!("{}", val);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>map - Transform Elements</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3, 4, 5];
+
+    // map - transform each element
+    let doubled: Vec<i32> = v.iter()
+        .map(|x| x * 2)
+        .collect();
+
+    println!("{:?}", doubled);  // [2, 4, 6, 8, 10]
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>filter - Select Elements</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3, 4, 5, 6];
+
+    let evens: Vec<&i32> = v.iter()
+        .filter(|x| *x % 2 == 0)
+        .collect();
+
+    println!("{:?}", evens);  // [2, 4, 6]
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Chaining Operations</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    let result: i32 = numbers
+        .iter()
+        .filter(|x| *x % 2 == 0)    // Keep evens
+        .map(|x| x * x)              // Square
+        .take(3)                     // First 3
+        .sum();                      // Sum
+
+    println!("{}", result);  // 4 + 16 + 36 = 56
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Common Iterator Adapters</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Method</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>map</code></td><td>Transform each element</td></tr>
+                            <tr><td><code>filter</code></td><td>Keep elements matching predicate</td></tr>
+                            <tr><td><code>take(n)</code></td><td>Take first n elements</td></tr>
+                            <tr><td><code>skip(n)</code></td><td>Skip first n elements</td></tr>
+                            <tr><td><code>enumerate</code></td><td>Add index to elements</td></tr>
+                            <tr><td><code>zip</code></td><td>Combine two iterators</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Consuming Iterators</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Method</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>collect</code></td><td>Gather into collection</td></tr>
+                            <tr><td><code>sum</code></td><td>Sum all elements</td></tr>
+                            <tr><td><code>count</code></td><td>Count elements</td></tr>
+                            <tr><td><code>any</code></td><td>True if any match predicate</td></tr>
+                            <tr><td><code>all</code></td><td>True if all match predicate</td></tr>
+                            <tr><td><code>find</code></td><td>Find first matching element</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>fold - The Powerful Accumulator</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    // Sum
+    let sum = numbers.iter().fold(0, |acc, x| acc + x);
+    println!("Sum: {}", sum);  // 15
+
+    // Product
+    let product = numbers.iter().fold(1, |acc, x| acc * x);
+    println!("Product: {}", product);  // 120
+
+    // Build string
+    let words = vec!["hello", "world"];
+    let sentence = words.iter()
+        .fold(String::new(), |acc, w| acc + w + " ");
+    println!("{}", sentence);  // "hello world "
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>enumerate and zip</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec!["a", "b", "c"];
+
+    // enumerate - add index
+    for (index, value) in v.iter().enumerate() {
+        println!("{}: {}", index, value);
+    }
+
+    // zip - combine iterators
+    let names = vec!["Alice", "Bob"];
+    let ages = vec![30, 25];
+
+    for (name, age) in names.iter().zip(ages.iter()) {
+        println!("{} is {} years old", name, age);
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>find and any/all</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    // Find first even
+    let first_even = numbers.iter().find(|x| *x % 2 == 0);
+    println!("{:?}", first_even);  // Some(2)
+
+    // Check conditions
+    let has_even = numbers.iter().any(|x| x % 2 == 0);
+    let all_positive = numbers.iter().all(|x| *x > 0);
+
+    println!("Has even: {}", has_even);      // true
+    println!("All positive: {}", all_positive);  // true
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Iterators are Lazy</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3];
+
+    // Nothing happens yet!
+    let iter = v.iter().map(|x| {
+        println!("Processing {}", x);
+        x * 2
+    });
+
+    // Now it runs
+    let result: Vec<_> = iter.collect();
+}
+                    </code></pre>
+                    <blockquote><strong>Zero-cost abstraction:</strong> As fast as hand-written loops</blockquote>
+                </section>
+            </section>
+
+            <!-- Lab 9 -->
+            <section>
+                <section>
+                    <h2>Lab 9</h2>
+                    <h3>Closures</h3>
+                </section>
+                <section>
+                    <h3>Lab 9: Closures</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Write basic closures</li>
+                        <li>Use closures with different capture modes</li>
+                        <li>Pass closures to functions</li>
+                        <li>Store closures in variables</li>
+                    </ul>
+                    <p><strong>Time:</strong> 30 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab09_closures/</code></p>
+                </section>
+            </section>
+
+            <!-- Lab 10 -->
+            <section>
+                <section>
+                    <h2>Lab 10</h2>
+                    <h3>Iterators</h3>
+                </section>
+                <section>
+                    <h3>Lab 10: Iterators</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Create and consume iterators</li>
+                        <li>Use map and filter</li>
+                        <li>Chain iterator methods</li>
+                        <li>Use fold for accumulation</li>
+                        <li>Process data with functional style</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab10_iterators/</code></p>
+                </section>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <section>
+                    <h2>Module 6 Summary</h2>
+                    <h3>Key Takeaways</h3>
+                    <ol>
+                        <li><strong>Closures</strong> are anonymous functions that capture environment</li>
+                        <li><strong>move</strong> transfers ownership to closure</li>
+                        <li><strong>Iterators</strong> process sequences lazily</li>
+                        <li><strong>Adapters</strong> (map, filter) transform iterators</li>
+                        <li><strong>Consumers</strong> (collect, sum, fold) produce values</li>
+                        <li><strong>Chain operations</strong> for clean, declarative code</li>
+                        <li><strong>Zero-cost</strong> - as fast as hand-written loops</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Course Summary</h2>
+                    <p><strong>What you've learned:</strong></p>
+                    <ul>
+                        <li>Getting started with Rust and Cargo</li>
+                        <li>Types, variables, functions, control flow</li>
+                        <li>Collections (Vec, String, HashMap)</li>
+                        <li>Organizing code with modules and crates</li>
+                        <li>Error handling with Result and panic!</li>
+                        <li>Structs, methods, traits, generics</li>
+                        <li>Closures and iterators</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Resources</h2>
+                    <ul>
+                        <li>The Rust Book: https://doc.rust-lang.org/book/</li>
+                        <li>Rust by Example: https://doc.rust-lang.org/rust-by-example/</li>
+                        <li>Rustlings: https://github.com/rust-lang/rustlings</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <h3>You're now ready to write Rust programs!</h3>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            plugins: [ RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

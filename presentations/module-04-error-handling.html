@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Module 4: Error Handling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <style>
+        :root {
+            --r-heading-color: #2c3e50;
+            --r-main-color: #333;
+            --r-link-color: #e67e22;
+            --r-background-color: #fff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: var(--r-heading-color); }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.4em; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal pre { width: 100%; font-size: 0.48em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .reveal pre code { max-height: 380px; padding: 15px; }
+        .reveal ul, .reveal ol { font-size: 0.75em; }
+        .reveal li { margin-bottom: 0.4em; }
+        .reveal table { font-size: 0.65em; }
+        .reveal blockquote { font-size: 0.8em; background: #f9f9f9; border-left: 4px solid #e67e22; padding: 0.5em 1em; }
+        .reveal .small-code pre { font-size: 0.42em; }
+        .reveal .small-code pre code { max-height: 340px; }
+        .two-columns { display: flex; gap: 2em; }
+        .two-columns > * { flex: 1; }
+        .reveal section p { font-size: 0.75em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Module 4</h1>
+                <h2>Error Handling</h2>
+                <p>Introduction to Rust Programming</p>
+            </section>
+
+            <!-- Overview -->
+            <section>
+                <h2>Module Overview</h2>
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Understand unrecoverable vs recoverable errors</li>
+                    <li>Use <code>panic!</code> for unrecoverable errors</li>
+                    <li>Work with <code>Result&lt;T, E&gt;</code> for recoverable errors</li>
+                    <li>Propagate errors with the <code>?</code> operator</li>
+                    <li>Create functions that return Result</li>
+                </ul>
+            </section>
+
+            <!-- Section 1: Error Categories -->
+            <section>
+                <section>
+                    <h2>Section 1</h2>
+                    <h3>Error Categories</h3>
+                </section>
+
+                <section>
+                    <h3>Two Types of Errors</h3>
+                    <pre><code class="text" data-trim>
+┌─────────────────────────────────────────────────────────┐
+│                  Error Categories                        │
+├────────────────────────────┬────────────────────────────┤
+│       Unrecoverable        │        Recoverable         │
+├────────────────────────────┼────────────────────────────┤
+│ • Bug in code              │ • Expected failures        │
+│ • Invalid state            │ • File not found           │
+│ • Should not happen        │ • Network timeout          │
+├────────────────────────────┼────────────────────────────┤
+│         panic!             │       Result<T, E>         │
+└────────────────────────────┴────────────────────────────┘
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Unrecoverable Errors - panic!</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    panic!("crash and burn!");
+}
+                    </code></pre>
+                    <p><strong>Output:</strong></p>
+                    <pre><code class="text" data-trim>
+thread 'main' panicked at 'crash and burn!', src/main.rs:2:5
+                    </code></pre>
+                    <p><strong>When to use:</strong></p>
+                    <ul>
+                        <li>Bug in code that shouldn't happen</li>
+                        <li>Impossible to continue safely</li>
+                        <li>In tests (to fail the test)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>panic! Examples</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let v = vec![1, 2, 3];
+
+    // Panics: index out of bounds
+    v[99];
+}
+                    </code></pre>
+                    <p><strong>Get backtrace:</strong></p>
+                    <pre><code class="bash" data-trim>
+RUST_BACKTRACE=1 cargo run
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 2: Result -->
+            <section>
+                <section>
+                    <h2>Section 2</h2>
+                    <h3>The Result Type</h3>
+                </section>
+
+                <section>
+                    <h3>Recoverable Errors - Result</h3>
+                    <pre><code class="rust" data-trim>
+enum Result<T, E> {
+    Ok(T),   // Success with value
+    Err(E),  // Error with value
+}
+                    </code></pre>
+                    <p><strong>Example:</strong></p>
+                    <pre><code class="rust" data-trim>
+use std::fs::File;
+
+fn main() {
+    let file_result = File::open("hello.txt");
+    // Type: Result<File, std::io::Error>
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Handling Result with match</h3>
+                    <pre><code class="rust" data-trim>
+use std::fs::File;
+
+fn main() {
+    let file_result = File::open("hello.txt");
+
+    let file = match file_result {
+        Ok(f) => f,
+        Err(e) => {
+            println!("Failed to open file: {}", e);
+            return;
+        }
+    };
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>unwrap and expect</h3>
+                    <p><strong>Shortcuts that panic on Err:</strong></p>
+                    <pre><code class="rust" data-trim>
+use std::fs::File;
+
+fn main() {
+    // Panics with default message if Err
+    let file1 = File::open("hello.txt").unwrap();
+
+    // Panics with custom message if Err
+    let file2 = File::open("hello.txt")
+        .expect("Failed to open hello.txt");
+}
+                    </code></pre>
+                    <blockquote><strong>Use for:</strong> Prototyping, when you're certain it won't fail</blockquote>
+                </section>
+
+                <section>
+                    <h3>unwrap_or Methods</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let result: Result<i32, &str> = Err("error");
+
+    // Provide default value
+    let value = result.unwrap_or(0);  // Returns 0
+
+    // Compute default with closure
+    let value = result.unwrap_or_else(|e| {
+        println!("Error: {}", e);
+        0
+    });
+
+    let ok_result: Result<i32, &str> = Ok(42);
+    let value2 = ok_result.unwrap_or(0);  // Returns 42
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 3: Error Propagation -->
+            <section>
+                <section>
+                    <h2>Section 3</h2>
+                    <h3>Error Propagation</h3>
+                </section>
+
+                <section>
+                    <h3>The ? Operator</h3>
+                    <p><strong>Shorthand for error propagation:</strong></p>
+                    <pre><code class="rust" data-trim>
+use std::fs::File;
+use std::io::{self, Read};
+
+fn read_file() -> Result<String, io::Error> {
+    let mut file = File::open("hello.txt")?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    Ok(contents)
+}
+                    </code></pre>
+                    <blockquote><code>?</code> returns early with Err, or unwraps Ok</blockquote>
+                </section>
+
+                <section>
+                    <h3>? vs match</h3>
+                    <div class="two-columns">
+                        <div>
+                            <p><strong>With match (verbose):</strong></p>
+                            <pre><code class="rust" data-trim>
+fn read_file() -> Result<String, io::Error> {
+    let file_result = File::open("hello.txt");
+    let mut file = match file_result {
+        Ok(f) => f,
+        Err(e) => return Err(e),
+    };
+    // ...
+}
+                            </code></pre>
+                        </div>
+                        <div>
+                            <p><strong>With ? (concise):</strong></p>
+                            <pre><code class="rust" data-trim>
+fn read_file() -> Result<String, io::Error> {
+    let mut file = File::open("hello.txt")?;
+    // ...
+}
+                            </code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Chaining with ?</h3>
+                    <pre><code class="rust" data-trim>
+use std::fs::File;
+use std::io::{self, Read};
+
+fn read_file() -> Result<String, io::Error> {
+    let mut contents = String::new();
+    File::open("hello.txt")?.read_to_string(&mut contents)?;
+    Ok(contents)
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>? in main()</h3>
+                    <p><strong>main can return Result:</strong></p>
+                    <pre><code class="rust" data-trim>
+use std::fs::File;
+use std::io;
+
+fn main() -> Result<(), io::Error> {
+    let file = File::open("hello.txt")?;
+    // ...
+    Ok(())
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 4: Custom Errors -->
+            <section>
+                <section>
+                    <h2>Section 4</h2>
+                    <h3>Creating Functions with Result</h3>
+                </section>
+
+                <section>
+                    <h3>Returning Result</h3>
+                    <pre><code class="rust" data-trim>
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err(String::from("Cannot divide by zero"))
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn main() {
+    match divide(10, 2) {
+        Ok(result) => println!("Result: {}", result),
+        Err(e) => println!("Error: {}", e),
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>When to panic! vs Result</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Use panic! when</th><th>Use Result when</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Bug in your code</td><td>Expected failure modes</td></tr>
+                            <tr><td>Contract violation</td><td>Caller can handle the error</td></tr>
+                            <tr><td>Examples and tests</td><td>Library code</td></tr>
+                        </tbody>
+                    </table>
+                    <pre><code class="rust" data-trim>
+// Panic: invalid input is a bug
+fn get_index(v: &[i32], i: usize) -> i32 { v[i] }
+
+// Result: file might not exist
+fn read_file(path: &str) -> Result<String, io::Error> { ... }
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Best Practices</h3>
+                    <ol>
+                        <li>Use <code>?</code> for clean error propagation</li>
+                        <li>Use <code>expect()</code> with descriptive messages during development</li>
+                        <li>Return <code>Result</code> from functions that can fail</li>
+                        <li>Let callers decide how to handle errors</li>
+                        <li><code>panic!</code> only for programming errors</li>
+                    </ol>
+                </section>
+            </section>
+
+            <!-- Lab 6 -->
+            <section>
+                <section>
+                    <h2>Lab 6</h2>
+                    <h3>Error Handling</h3>
+                </section>
+                <section>
+                    <h3>Lab 6: Error Handling</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Use panic! for unrecoverable errors</li>
+                        <li>Handle errors with Result and match</li>
+                        <li>Use unwrap and expect</li>
+                        <li>Propagate errors with ?</li>
+                        <li>Create functions returning Result</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab06_error_handling/</code></p>
+                </section>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <section>
+                    <h2>Module 4 Summary</h2>
+                    <h3>Key Takeaways</h3>
+                    <ol>
+                        <li><strong>panic!</strong> for unrecoverable errors (bugs)</li>
+                        <li><strong>Result&lt;T, E&gt;</strong> for recoverable errors</li>
+                        <li><strong>match</strong> for explicit error handling</li>
+                        <li><strong>unwrap/expect</strong> for quick prototyping</li>
+                        <li><strong>?</strong> for concise error propagation</li>
+                        <li><strong>Functions should return Result</strong> when they can fail</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <h3>Next Module: Object Orientation</h3>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            plugins: [ RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>

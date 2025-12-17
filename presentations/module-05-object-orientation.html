@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Module 5: Object Orientation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <style>
+        :root {
+            --r-heading-color: #2c3e50;
+            --r-main-color: #333;
+            --r-link-color: #e67e22;
+            --r-background-color: #fff;
+        }
+        .reveal h1, .reveal h2, .reveal h3 { text-transform: none; color: var(--r-heading-color); }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.4em; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal pre { width: 100%; font-size: 0.48em; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .reveal pre code { max-height: 380px; padding: 15px; }
+        .reveal ul, .reveal ol { font-size: 0.75em; }
+        .reveal li { margin-bottom: 0.4em; }
+        .reveal table { font-size: 0.65em; }
+        .reveal blockquote { font-size: 0.8em; background: #f9f9f9; border-left: 4px solid #e67e22; padding: 0.5em 1em; }
+        .reveal .small-code pre { font-size: 0.42em; }
+        .reveal .small-code pre code { max-height: 340px; }
+        .two-columns { display: flex; gap: 2em; }
+        .two-columns > * { flex: 1; }
+        .reveal section p { font-size: 0.75em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Title Slide -->
+            <section>
+                <h1>Module 5</h1>
+                <h2>Object Orientation</h2>
+                <p>Introduction to Rust Programming</p>
+            </section>
+
+            <!-- Overview -->
+            <section>
+                <h2>Module Overview</h2>
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Define and use structs</li>
+                    <li>Implement methods with impl blocks</li>
+                    <li>Create associated functions (constructors)</li>
+                    <li>Define and implement traits</li>
+                    <li>Write generic functions and types</li>
+                    <li>Use common design patterns</li>
+                </ul>
+            </section>
+
+            <!-- Section 1: Structs -->
+            <section>
+                <section>
+                    <h2>Section 1</h2>
+                    <h3>Structs</h3>
+                </section>
+
+                <section>
+                    <h3>Defining Structures</h3>
+                    <pre><code class="rust" data-trim>
+struct User {
+    username: String,
+    email: String,
+    sign_in_count: u64,
+    active: bool,
+}
+
+fn main() {
+    let user1 = User {
+        email: String::from("user@example.com"),
+        username: String::from("someuser"),
+        active: true,
+        sign_in_count: 1,
+    };
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Mutable Structs</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let mut user1 = User {
+        email: String::from("user@example.com"),
+        username: String::from("someuser"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    user1.email = String::from("new@example.com");
+}
+                    </code></pre>
+                    <blockquote>The entire struct must be mutable</blockquote>
+                </section>
+
+                <section>
+                    <h3>Field Init Shorthand</h3>
+                    <pre><code class="rust" data-trim>
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,          // shorthand for email: email
+        username,       // shorthand for username: username
+        active: true,
+        sign_in_count: 1,
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Struct Update Syntax</h3>
+                    <pre><code class="rust" data-trim>
+fn main() {
+    let user1 = User {
+        email: String::from("user@example.com"),
+        username: String::from("someuser"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    let user2 = User {
+        email: String::from("another@example.com"),
+        ..user1  // Use remaining fields from user1
+    };
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Tuple Structs</h3>
+                    <pre><code class="rust" data-trim>
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+
+    println!("R: {}", black.0);
+    println!("X: {}", origin.0);
+
+    // black and origin are different types!
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Printing Structs with Debug</h3>
+                    <pre><code class="rust" data-trim>
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect = Rectangle { width: 30, height: 50 };
+
+    println!("{:?}", rect);    // One line
+    println!("{:#?}", rect);   // Pretty-printed
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 2: Methods -->
+            <section>
+                <section>
+                    <h2>Section 2</h2>
+                    <h3>Methods</h3>
+                </section>
+
+                <section>
+                    <h3>Implementing Methods</h3>
+                    <pre><code class="rust" data-trim>
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect = Rectangle { width: 30, height: 50 };
+    println!("Area: {}", rect.area());
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Methods - self Parameter</h3>
+                    <pre><code class="rust" data-trim>
+impl Rectangle {
+    // Borrow immutably - most common
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    // Borrow mutably - for modification
+    fn double(&mut self) {
+        self.width *= 2;
+        self.height *= 2;
+    }
+
+    // Take ownership - rare
+    fn into_square(self) -> Rectangle {
+        let side = self.width.max(self.height);
+        Rectangle { width: side, height: side }
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Associated Functions</h3>
+                    <pre><code class="rust" data-trim>
+impl Rectangle {
+    // No self parameter - called with ::
+    fn new(width: u32, height: u32) -> Rectangle {
+        Rectangle { width, height }
+    }
+
+    fn square(size: u32) -> Rectangle {
+        Rectangle { width: size, height: size }
+    }
+}
+
+fn main() {
+    let rect = Rectangle::new(30, 50);
+    let sq = Rectangle::square(10);
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 3: Traits -->
+            <section>
+                <section>
+                    <h2>Section 3</h2>
+                    <h3>Traits</h3>
+                </section>
+
+                <section>
+                    <h3>What are Traits?</h3>
+                    <p><strong>Shared behavior definition:</strong></p>
+                    <pre><code class="rust" data-trim>
+trait Summary {
+    fn summarize(&self) -> String;
+}
+                    </code></pre>
+                    <blockquote>Similar to interfaces in Java, protocols in Swift</blockquote>
+                </section>
+
+                <section>
+                    <h3>Implementing Traits</h3>
+                    <pre><code class="rust" data-trim>
+trait Summary {
+    fn summarize(&self) -> String;
+}
+
+struct Article {
+    title: String,
+    author: String,
+}
+
+impl Summary for Article {
+    fn summarize(&self) -> String {
+        format!("{}, by {}", self.title, self.author)
+    }
+}
+
+fn main() {
+    let article = Article {
+        title: String::from("Breaking News"),
+        author: String::from("John"),
+    };
+    println!("{}", article.summarize());
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Default Implementations</h3>
+                    <pre><code class="rust" data-trim>
+trait Summary {
+    fn summarize_author(&self) -> String;
+
+    // Default implementation
+    fn summarize(&self) -> String {
+        format!("(Read more from {}...)", self.summarize_author())
+    }
+}
+
+impl Summary for Article {
+    fn summarize_author(&self) -> String {
+        self.author.clone()
+    }
+    // Uses default summarize()
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Common Derive Traits</h3>
+                    <pre><code class="rust" data-trim>
+#[derive(Debug, Clone, PartialEq)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p1 = Point { x: 1, y: 2 };
+    let p2 = p1.clone();      // Clone
+
+    println!("{:?}", p1);      // Debug
+
+    if p1 == p2 {              // PartialEq
+        println!("Equal!");
+    }
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 4: Generics -->
+            <section>
+                <section>
+                    <h2>Section 4</h2>
+                    <h3>Generics</h3>
+                </section>
+
+                <section>
+                    <h3>Generic Functions</h3>
+                    <pre><code class="rust" data-trim>
+fn largest<T: PartialOrd>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
+fn main() {
+    let numbers = vec![34, 50, 25, 100];
+    println!("Largest: {}", largest(&numbers));
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Generic Structs</h3>
+                    <pre><code class="rust" data-trim>
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+fn main() {
+    let integer_point = Point { x: 5, y: 10 };
+    let float_point = Point { x: 1.0, y: 4.0 };
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Multiple Type Parameters</h3>
+                    <pre><code class="rust" data-trim>
+struct Point<T, U> {
+    x: T,
+    y: U,
+}
+
+fn main() {
+    let mixed = Point { x: 5, y: 4.0 };
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Trait Bounds</h3>
+                    <pre><code class="rust" data-trim>
+// Only types with Summary can be passed
+fn notify<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
+}
+
+// Shorthand syntax
+fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Multiple Trait Bounds</h3>
+                    <pre><code class="rust" data-trim>
+use std::fmt::Display;
+
+fn notify<T: Summary + Display>(item: &T) {
+    println!("{}", item);
+}
+
+// With where clause
+fn complex<T, U>(t: &T, u: &U)
+where
+    T: Summary + Clone,
+    U: Clone + Display,
+{
+    // ...
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Section 5: Patterns -->
+            <section>
+                <section>
+                    <h2>Section 5</h2>
+                    <h3>Design Patterns</h3>
+                </section>
+
+                <section>
+                    <h3>Builder Pattern</h3>
+                    <pre><code class="rust" data-trim>
+struct ServerBuilder {
+    host: String,
+    port: u16,
+}
+
+impl ServerBuilder {
+    fn new() -> Self {
+        ServerBuilder { host: String::from("localhost"), port: 8080 }
+    }
+
+    fn host(mut self, host: &str) -> Self {
+        self.host = host.to_string();
+        self
+    }
+
+    fn port(mut self, port: u16) -> Self {
+        self.port = port;
+        self
+    }
+
+    fn build(self) -> Server {
+        Server { host: self.host, port: self.port }
+    }
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Newtype Pattern</h3>
+                    <pre><code class="rust" data-trim>
+// Wrap a type to give it new meaning
+struct Meters(f64);
+struct Feet(f64);
+
+impl Meters {
+    fn to_feet(&self) -> Feet {
+        Feet(self.0 * 3.28084)
+    }
+}
+
+fn main() {
+    let distance = Meters(100.0);
+    let in_feet = distance.to_feet();
+}
+                    </code></pre>
+                </section>
+            </section>
+
+            <!-- Lab 7 -->
+            <section>
+                <section>
+                    <h2>Lab 7</h2>
+                    <h3>Structs and Methods</h3>
+                </section>
+                <section>
+                    <h3>Lab 7: Structs and Methods</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Define structs with named fields</li>
+                        <li>Create tuple structs</li>
+                        <li>Implement methods using impl</li>
+                        <li>Create associated functions (constructors)</li>
+                        <li>Use derive for Debug, Clone</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab07_structs_methods/</code></p>
+                </section>
+            </section>
+
+            <!-- Lab 8 -->
+            <section>
+                <section>
+                    <h2>Lab 8</h2>
+                    <h3>Traits and Generics</h3>
+                </section>
+                <section>
+                    <h3>Lab 8: Traits and Generics</h3>
+                    <p>You will practice:</p>
+                    <ul>
+                        <li>Define custom traits</li>
+                        <li>Implement traits for structs</li>
+                        <li>Write generic functions</li>
+                        <li>Use trait bounds</li>
+                        <li>Implement common patterns</li>
+                    </ul>
+                    <p><strong>Time:</strong> 35 minutes</p>
+                    <p><strong>Folder:</strong> <code>labs/lab08_traits_generics/</code></p>
+                </section>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <section>
+                    <h2>Module 5 Summary</h2>
+                    <h3>Key Takeaways</h3>
+                    <ol>
+                        <li><strong>Structs</strong> group related data</li>
+                        <li><strong>impl blocks</strong> add methods and associated functions</li>
+                        <li><strong>Traits</strong> define shared behavior</li>
+                        <li><strong>Generics</strong> allow type-flexible code</li>
+                        <li><strong>Trait bounds</strong> constrain generic types</li>
+                        <li><strong>#[derive]</strong> auto-implements common traits</li>
+                        <li><strong>Patterns</strong> like Builder and Newtype are common in Rust</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Questions?</h2>
+                    <h3>Next Module: Functional Programming</h3>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            plugins: [ RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>
