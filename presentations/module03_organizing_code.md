@@ -315,7 +315,7 @@ pub use front_of_house::hosting;
 
 ## Slide 18: Lab Preview
 
-**Lab 3: Modules and Crates** (35 min)
+**Lab 5: Modules and Crates** (35 min)
 
 You will:
 - Create modules in a single file

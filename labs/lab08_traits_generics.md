@@ -1,4 +1,4 @@
-# Lab 5b: Traits and Generics
+# Lab 8: Traits and Generics
 
 **Duration:** 35 minutes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- Completed Lab 5a
+- Completed Lab 7
 
 ---
 
@@ -505,4 +505,4 @@ You have learned:
 - Builder pattern creates flexible constructors
 - Newtype pattern provides type safety
 
-**Next:** Lab 6a - Closures
+**Next:** Lab 9 - Closures

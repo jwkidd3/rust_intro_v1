@@ -292,7 +292,7 @@ fn read_file(path: &str) -> Result<String, io::Error> { ... }
 
 ## Slide 17: Lab Preview
 
-**Lab 4: Error Handling** (35 min)
+**Lab 6: Error Handling** (35 min)
 
 You will:
 - Use panic! for unrecoverable errors

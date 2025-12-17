@@ -490,11 +490,11 @@ fn main() {
 
 ## Slide 27: Lab Preview
 
-**Lab 6a: Closures** (30 min)
+**Lab 9: Closures** (30 min)
 - Write closures with different capture modes
 - Pass closures to functions
 
-**Lab 6b: Iterators** (35 min)
+**Lab 10: Iterators** (35 min)
 - Use map, filter, fold
 - Chain iterator operations
 

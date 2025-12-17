@@ -1,4 +1,4 @@
-# Lab 5a: Structs and Methods
+# Lab 7: Structs and Methods
 
 **Duration:** 35 minutes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- Completed Module 4 lab
+- Completed Lab 6
 
 ---
 
@@ -415,4 +415,4 @@ You have learned:
 - Associated functions (no self) are called with `::`
 - `#[derive(...)]` auto-implements common traits
 
-**Next:** Lab 5b - Traits and Generics
+**Next:** Lab 8 - Traits and Generics

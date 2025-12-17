@@ -232,4 +232,4 @@ You have successfully:
 - Created and built a Rust project with Cargo
 - Learned essential Cargo commands
 
-**Next:** Lab 2a - Variables and Types
+**Next:** Lab 2 - Variables and Types

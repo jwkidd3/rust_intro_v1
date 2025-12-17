@@ -1,4 +1,4 @@
-# Lab 6a: Closures
+# Lab 9: Closures
 
 **Duration:** 30 minutes
 
@@ -11,7 +11,7 @@
 
 ## Prerequisites
 
-- Completed Module 5 labs
+- Completed Labs 7 and 8
 
 ---
 
@@ -363,4 +363,4 @@ You have learned:
 - `Fn` - borrows immutably, `FnMut` - borrows mutably, `FnOnce` - takes ownership
 - Closures can be passed to and returned from functions
 
-**Next:** Lab 6b - Iterators
+**Next:** Lab 10 - Iterators

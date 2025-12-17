@@ -1,21 +1,21 @@
 # Introduction to Rust - Labs
 
-This directory contains all hands-on labs for the Introduction to Rust 2-day course, aligned with the 6-module structure.
+This directory contains all hands-on labs for the Introduction to Rust 2-day course.
 
 ## Lab Overview
 
 | Lab | Title | Duration | Topics |
 |-----|-------|----------|--------|
 | 01 | Environment Setup | 30 min | Install Rust, Cargo basics, first project |
-| 02a | Variables and Types | 35 min | Variables, mutability, scalar/compound types, ownership |
-| 02b | Functions and Control Flow | 35 min | Functions, if/else, loops |
-| 02c | Collections | 30 min | Vectors, Strings, HashMaps |
-| 03 | Modules and Crates | 35 min | Module system, visibility, external crates |
-| 04 | Error Handling | 35 min | panic!, Result, ? operator |
-| 05a | Structs and Methods | 35 min | Structs, impl blocks, associated functions |
-| 05b | Traits and Generics | 35 min | Traits, generics, trait bounds, patterns |
-| 06a | Closures | 30 min | Closure syntax, capture modes, Fn traits |
-| 06b | Iterators | 35 min | Iterator methods, map, filter, fold |
+| 02 | Variables and Types | 35 min | Variables, mutability, scalar/compound types |
+| 03 | Functions and Control Flow | 35 min | Functions, if/else, loops |
+| 04 | Collections | 30 min | Vectors, Strings, HashMaps |
+| 05 | Modules and Crates | 35 min | Module system, visibility, external crates |
+| 06 | Error Handling | 35 min | panic!, Result, ? operator |
+| 07 | Structs and Methods | 35 min | Structs, impl blocks, associated functions |
+| 08 | Traits and Generics | 35 min | Traits, generics, trait bounds, patterns |
+| 09 | Closures | 30 min | Closure syntax, capture modes, Fn traits |
+| 10 | Iterators | 35 min | Iterator methods, map, filter, fold |
 
 **Total Lab Time:** ~5.5 hours
 
@@ -32,32 +32,30 @@ Set up your Rust development environment:
 
 ---
 
-### Lab 2a: Variables and Types
-**File:** `lab02a_variables_types.md`
+### Lab 2: Variables and Types
+**File:** `lab02_variables_types.md`
 
-Learn Rust's type system and ownership:
+Learn Rust's type system:
 - Mutable vs immutable variables
 - Constants and shadowing
 - Integer, float, boolean, char types
 - Tuples and arrays
-- Ownership basics and move semantics
 
 ---
 
-### Lab 2b: Functions and Control Flow
-**File:** `lab02b_functions_control_flow.md`
+### Lab 3: Functions and Control Flow
+**File:** `lab03_functions_control_flow.md`
 
 Master Rust control structures:
 - Function parameters and returns
 - Statements vs expressions
 - if/else as expressions
 - loop, while, and for loops
-- References and borrowing
 
 ---
 
-### Lab 2c: Collections
-**File:** `lab02c_collections.md`
+### Lab 4: Collections
+**File:** `lab04_collections.md`
 
 Work with Rust's collection types:
 - Vec<T> for dynamic arrays
@@ -67,8 +65,8 @@ Work with Rust's collection types:
 
 ---
 
-### Lab 3: Modules and Crates
-**File:** `lab03_modules_crates.md`
+### Lab 5: Modules and Crates
+**File:** `lab05_modules_crates.md`
 
 Organize your code:
 - Module system and visibility
@@ -78,8 +76,8 @@ Organize your code:
 
 ---
 
-### Lab 4: Error Handling
-**File:** `lab04_error_handling.md`
+### Lab 6: Error Handling
+**File:** `lab06_error_handling.md`
 
 Handle errors gracefully:
 - panic! for unrecoverable errors
@@ -89,8 +87,8 @@ Handle errors gracefully:
 
 ---
 
-### Lab 5a: Structs and Methods
-**File:** `lab05a_structs_methods.md`
+### Lab 7: Structs and Methods
+**File:** `lab07_structs_methods.md`
 
 Structure your data:
 - Defining structs with named fields
@@ -101,8 +99,8 @@ Structure your data:
 
 ---
 
-### Lab 5b: Traits and Generics
-**File:** `lab05b_traits_generics.md`
+### Lab 8: Traits and Generics
+**File:** `lab08_traits_generics.md`
 
 Write reusable, polymorphic code:
 - Defining and implementing traits
@@ -113,8 +111,8 @@ Write reusable, polymorphic code:
 
 ---
 
-### Lab 6a: Closures
-**File:** `lab06a_closures.md`
+### Lab 9: Closures
+**File:** `lab09_closures.md`
 
 Master functional programming with closures:
 - Closure syntax variations
@@ -125,8 +123,8 @@ Master functional programming with closures:
 
 ---
 
-### Lab 6b: Iterators
-**File:** `lab06b_iterators.md`
+### Lab 10: Iterators
+**File:** `lab10_iterators.md`
 
 Process data functionally:
 - Creating iterators (iter, iter_mut, into_iter)

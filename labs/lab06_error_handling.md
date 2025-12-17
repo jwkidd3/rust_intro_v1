@@ -1,4 +1,4 @@
-# Lab 4: Error Handling
+# Lab 6: Error Handling
 
 **Duration:** 35 minutes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- Completed Module 3 lab
+- Completed Lab 5
 
 ---
 
@@ -412,4 +412,4 @@ You have learned:
 - `?` for concise error propagation
 - Functions can return `Result` to let callers handle errors
 
-**Next:** Lab 5a - Structs and Methods
+**Next:** Lab 7 - Structs and Methods

@@ -521,10 +521,10 @@ fn main() {
 
 ## Slide 28: Lab Preview
 
-**Lab 5a: Structs and Methods** (35 min)
+**Lab 7: Structs and Methods** (35 min)
 - Define structs, implement methods
 
-**Lab 5b: Traits and Generics** (35 min)
+**Lab 8: Traits and Generics** (35 min)
 - Define traits, use generics and bounds
 
 ---

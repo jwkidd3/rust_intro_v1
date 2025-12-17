@@ -1,4 +1,4 @@
-# Lab 2a: Variables and Types
+# Lab 2: Variables and Types
 
 **Duration:** 35 minutes
 
@@ -296,4 +296,4 @@ You have learned:
 - Scalar types: integers, floats, booleans, characters
 - Compound types: tuples (mixed types), arrays (same type, fixed size)
 
-**Next:** Lab 2b - Functions and Control Flow
+**Next:** Lab 3 - Functions and Control Flow

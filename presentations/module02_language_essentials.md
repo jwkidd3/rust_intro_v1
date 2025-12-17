@@ -551,13 +551,13 @@ fn main() {
 
 ## Slide 32: Lab Preview
 
-**Lab 2a: Variables and Types** (35 min)
+**Lab 2: Variables and Types** (35 min)
 - Work with variables, mutability, types
 
-**Lab 2b: Functions and Control Flow** (35 min)
+**Lab 3: Functions and Control Flow** (35 min)
 - Write functions, use conditionals and loops
 
-**Lab 2c: Collections** (30 min)
+**Lab 4: Collections** (30 min)
 - Use Vec, String, and HashMap
 
 ---

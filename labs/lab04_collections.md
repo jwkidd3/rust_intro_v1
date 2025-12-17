@@ -1,4 +1,4 @@
-# Lab 2c: Collections
+# Lab 4: Collections
 
 **Duration:** 30 minutes
 
@@ -11,7 +11,7 @@
 
 ## Prerequisites
 
-- Completed Labs 2a and 2b
+- Completed Labs 2 and 3
 
 ---
 
@@ -384,4 +384,4 @@ You have learned:
 - `HashMap<K, V>` stores key-value pairs
 - Use `.entry().or_insert()` for conditional insertion
 
-**Next:** Lab 3 - Modules and Crates
+**Next:** Lab 5 - Modules and Crates

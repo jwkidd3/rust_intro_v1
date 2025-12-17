@@ -7,7 +7,7 @@ This directory contains the slide decks for the 6-module Introduction to Rust co
 | Module | File | Duration | Topics |
 |--------|------|----------|--------|
 | 1 | `module01_getting_started.md` | 45 min | Rust overview, installation, Cargo, Hello World |
-| 2 | `module02_language_essentials.md` | 75 min | Variables, types, ownership, control flow, functions, collections |
+| 2 | `module02_language_essentials.md` | 75 min | Variables, types, control flow, functions, collections |
 | 3 | `module03_organizing_code.md` | 30 min | Modules, packages, crates, Cargo |
 | 4 | `module04_error_handling.md` | 35 min | panic!, Result, ? operator |
 | 5 | `module05_object_orientation.md` | 60 min | Structs, methods, traits, generics, patterns |
@@ -27,8 +27,8 @@ The course is organized into 6 modules aligned with the PDF outline:
 - IDE setup with rust-analyzer
 
 ### Module 2: Rust Language Essentials (3 parts)
-- **Part 1:** Variables, data types, ownership basics
-- **Part 2:** Functions, control flow, references
+- **Part 1:** Variables, data types
+- **Part 2:** Functions, control flow
 - **Part 3:** Collections (Vec, String, HashMap)
 
 ### Module 3: Organizing Rust Code
@@ -101,15 +101,15 @@ Each presentation module is designed to precede its corresponding lab(s):
 | Presentation | Lab(s) |
 |--------------|--------|
 | Module 1: Getting Started | Lab 1: Environment Setup |
-| Module 2: Language Essentials (Part 1) | Lab 2a: Variables and Types |
-| Module 2: Language Essentials (Part 2) | Lab 2b: Functions and Control Flow |
-| Module 2: Language Essentials (Part 3) | Lab 2c: Collections |
-| Module 3: Organizing Code | Lab 3: Modules and Crates |
-| Module 4: Error Handling | Lab 4: Error Handling |
-| Module 5: Object Orientation (Part 1) | Lab 5a: Structs and Methods |
-| Module 5: Object Orientation (Part 2) | Lab 5b: Traits and Generics |
-| Module 6: Functional Programming (Part 1) | Lab 6a: Closures |
-| Module 6: Functional Programming (Part 2) | Lab 6b: Iterators |
+| Module 2: Language Essentials (Part 1) | Lab 2: Variables and Types |
+| Module 2: Language Essentials (Part 2) | Lab 3: Functions and Control Flow |
+| Module 2: Language Essentials (Part 3) | Lab 4: Collections |
+| Module 3: Organizing Code | Lab 5: Modules and Crates |
+| Module 4: Error Handling | Lab 6: Error Handling |
+| Module 5: Object Orientation (Part 1) | Lab 7: Structs and Methods |
+| Module 5: Object Orientation (Part 2) | Lab 8: Traits and Generics |
+| Module 6: Functional Programming (Part 1) | Lab 9: Closures |
+| Module 6: Functional Programming (Part 2) | Lab 10: Iterators |
 
 ## Prerequisites
 

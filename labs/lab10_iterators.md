@@ -1,4 +1,4 @@
-# Lab 6b: Iterators
+# Lab 10: Iterators
 
 **Duration:** 35 minutes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- Completed Lab 6a
+- Completed Lab 9
 
 ---
 

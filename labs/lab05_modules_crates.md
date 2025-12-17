@@ -1,4 +1,4 @@
-# Lab 3: Modules and Crates
+# Lab 5: Modules and Crates
 
 **Duration:** 35 minutes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- Completed Module 2 labs
+- Completed Labs 1-4
 
 ---
 
@@ -370,4 +370,4 @@ You have learned:
 - `cargo new --lib` creates a library crate
 - `cargo doc` generates documentation
 
-**Next:** Lab 4 - Error Handling
+**Next:** Lab 6 - Error Handling

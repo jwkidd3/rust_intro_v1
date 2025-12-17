@@ -1,4 +1,4 @@
-# Lab 2b: Functions and Control Flow
+# Lab 3: Functions and Control Flow
 
 **Duration:** 35 minutes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- Completed Lab 2a
+- Completed Lab 2
 
 ---
 
@@ -338,4 +338,4 @@ You have learned:
 - `while` loops while condition is true
 - `for` is preferred for iteration (ranges, collections)
 
-**Next:** Lab 2c - Collections
+**Next:** Lab 4 - Collections
