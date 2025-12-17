@@ -1,25 +1,55 @@
 # Introduction to Rust - Presentations
 
-This directory contains the slide decks for the 12-module Introduction to Rust course.
+This directory contains the slide decks for the 6-module Introduction to Rust course.
 
 ## Presentation Files
 
 | Module | File | Duration | Topics |
 |--------|------|----------|--------|
 | 1 | `module01_getting_started.md` | 45 min | Rust overview, installation, Cargo, Hello World |
-| 2 | `module02_variables_data_types.md` | 45 min | Variables, mutability, scalar/compound types |
-| 3 | `module03_functions_control_flow.md` | 45 min | Functions, if/else, loops |
-| 4 | `module04_ownership.md` | 50 min | Ownership rules, move semantics, Copy/Clone |
-| 5 | `module05_references_borrowing.md` | 45 min | References, borrowing rules, slices |
-| 6 | `module06_structs_methods.md` | 50 min | Structs, tuple structs, impl blocks, methods |
-| 7 | `module07_enums_pattern_matching.md` | 50 min | Enums, Option, match, if let |
-| 8 | `module08_error_handling.md` | 45 min | panic!, Result, ?, error propagation |
-| 9 | `module09_collections_iterators.md` | 55 min | Vec, String, HashMap, iterators, closures |
-| 10 | `module10_modules_crates.md` | 45 min | Modules, visibility, use, crates |
-| 11 | `module11_generics_traits.md` | 55 min | Generics, traits, trait bounds, derive |
-| 12 | `module12_lifetimes_testing.md` | 55 min | Lifetimes, unit tests, integration tests |
+| 2 | `module02_language_essentials.md` | 75 min | Variables, types, ownership, control flow, functions, collections |
+| 3 | `module03_organizing_code.md` | 30 min | Modules, packages, crates, Cargo |
+| 4 | `module04_error_handling.md` | 35 min | panic!, Result, ? operator |
+| 5 | `module05_object_orientation.md` | 60 min | Structs, methods, traits, generics, patterns |
+| 6 | `module06_functional_programming.md` | 45 min | Closures, capture modes, iterators |
 
-**Total Presentation Time:** ~9 hours
+**Total Presentation Time:** ~4.75 hours
+
+## Course Structure
+
+The course is organized into 6 modules aligned with the PDF outline:
+
+### Module 1: Getting Started with Rust
+- What is Rust and why use it
+- Installing Rust with rustup
+- Cargo overview
+- Hello World walkthrough
+- IDE setup with rust-analyzer
+
+### Module 2: Rust Language Essentials (3 parts)
+- **Part 1:** Variables, data types, ownership basics
+- **Part 2:** Functions, control flow, references
+- **Part 3:** Collections (Vec, String, HashMap)
+
+### Module 3: Organizing Rust Code
+- Modules and visibility
+- Packages and crates
+- Using external dependencies
+- Cargo features
+
+### Module 4: Error Handling
+- panic! for unrecoverable errors
+- Result<T, E> type
+- The ? operator
+- Error propagation patterns
+
+### Module 5: Object Orientation (2 parts)
+- **Part 1:** Structs, tuple structs, methods, associated functions
+- **Part 2:** Traits, generics, trait bounds, common patterns
+
+### Module 6: Functional Programming (2 parts)
+- **Part 1:** Closures, capture modes, Fn traits
+- **Part 2:** Iterators, adapters, consumers
 
 ## Presentation Format
 
@@ -66,22 +96,20 @@ ASCII diagrams are used throughout to illustrate:
 
 ## Alignment with Labs
 
-Each presentation is designed to precede its corresponding lab:
+Each presentation module is designed to precede its corresponding lab(s):
 
-| Presentation | Lab |
-|--------------|-----|
+| Presentation | Lab(s) |
+|--------------|--------|
 | Module 1: Getting Started | Lab 1: Environment Setup |
-| Module 2: Variables and Data Types | Lab 2: Variables and Data Types |
-| Module 3: Functions and Control Flow | Lab 3: Functions and Control Flow |
-| Module 4: Ownership Basics | Lab 4: Ownership |
-| Module 5: References and Borrowing | Lab 5: References and Borrowing |
-| Module 6: Structs and Methods | Lab 6: Structs and Methods |
-| Module 7: Enums and Pattern Matching | Lab 7: Enums and Pattern Matching |
-| Module 8: Error Handling | Lab 8: Error Handling |
-| Module 9: Collections and Iterators | Lab 9: Collections and Iterators |
-| Module 10: Modules and Crates | Lab 10: Modules and Crates |
-| Module 11: Generics and Traits | Lab 11: Generics and Traits |
-| Module 12: Lifetimes and Testing | Lab 12: Lifetimes and Testing |
+| Module 2: Language Essentials (Part 1) | Lab 2a: Variables and Types |
+| Module 2: Language Essentials (Part 2) | Lab 2b: Functions and Control Flow |
+| Module 2: Language Essentials (Part 3) | Lab 2c: Collections |
+| Module 3: Organizing Code | Lab 3: Modules and Crates |
+| Module 4: Error Handling | Lab 4: Error Handling |
+| Module 5: Object Orientation (Part 1) | Lab 5a: Structs and Methods |
+| Module 5: Object Orientation (Part 2) | Lab 5b: Traits and Generics |
+| Module 6: Functional Programming (Part 1) | Lab 6a: Closures |
+| Module 6: Functional Programming (Part 2) | Lab 6b: Iterators |
 
 ## Prerequisites
 

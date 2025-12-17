@@ -1,91 +1,75 @@
-# Introduction to Rust - 2 Day Course Outline
+# Rust Programming – Introduction (Part 1)
 
-## Day 1
+## Course Length
+2 Days
 
-### Module 1: Getting Started with Rust
-- Installing Rust and toolchain (rustup, cargo, rustc)
-- IDE setup and rust-analyzer
-- Hello World and project structure
-- Cargo basics: new, build, run, check
+## Objectives
+Rust is an intriguing language. Syntactically similar to C++, it offers higher-order language features to simplify important tasks such as memory management, concurrent execution, and safe vs. unsafe execution.
 
-### Module 2: Variables and Data Types
-- Variables and mutability
-- Constants and shadowing
-- Scalar types (integers, floats, booleans, characters)
-- Compound types (tuples and arrays)
+- Creating, building, and running Rust applications
+- Organizing Rust code and application structure properly
+- Using object-oriented techniques
+- Using functional programming techniques
 
-### Module 3: Functions and Control Flow
-- Function parameters and return values
-- Statements vs expressions
-- if/else conditional expressions
-- Loops: loop, while, for
+## Prerequisites
+Attendees should ideally have some basic previous programming experience with C/C++ or a similar programming language such as Go or Java.
 
-### Module 4: Ownership Basics
-- What is ownership and why it matters
-- The three ownership rules
-- Move semantics and Copy trait
-- Stack vs heap allocation
-
-### Module 5: References and Borrowing
-- References as non-owning pointers
-- Mutable vs immutable references
-- Borrowing rules
-- The slice type
-
-### Module 6: Structs and Methods
-- Defining and instantiating structs
-- Field init shorthand and update syntax
-- Methods with impl blocks
-- Associated functions
+## Audience
+This course is for those who want to learn to write Rust programs. It will help you understand what Rust applications look like, how to write Rust applications properly, and how to get the most out of the language and its libraries.
 
 ---
 
-## Day 2
+## Course Outline
 
-### Module 7: Enums and Pattern Matching
-- Enum definitions with data
-- Pattern matching with match
-- The Option enum
-- if let for concise matching
+### Module 1: Getting Started with Rust
+- What is Rust
+- What can I do with Rust
+- What tools do I need for Rust
+- Installing Rust and the toolchain
+- IDE setup and rust-analyzer
+- Hello World
 
-### Module 8: Error Handling
-- Recoverable vs unrecoverable errors
-- panic! and when to use it
-- Result<T, E> and the ? operator
-- Error propagation patterns
+### Module 2: Rust Language Essentials
+- Types and variables
+- Mutability and constants
+- Conditional logic (if/else)
+- Iteration (loop, while, for)
+- Functions
+- Collections (arrays, tuples, Vec, String, HashMap)
 
-### Module 9: Collections and Iterators
-- Vec<T>, String, and HashMap
+### Module 3: Organizing Rust Code
+- Modules
+- Packages
+- Crates
+- Using the Cargo dependency manager and build tool
+- Project structure best practices
+
+### Module 4: Error Handling
+- Overview of error handling in Rust
+- Recoverable errors (Result<T, E>)
+- Unrecoverable errors (panic!)
+- The ? operator for error propagation
+- Best practices for error handling
+
+### Module 5: Object Orientation
+- Defining structures (structs)
+- Implementing functionality (impl blocks)
+- Specifying traits
+- Trait bounds and generics
+- Design patterns in Rust
+
+### Module 6: Functional Programming
+- Concepts of functional programming
+- Anonymous functions
 - Closures and capture modes
-- Iterator trait and methods
-- Chaining iterator operations
-
-### Module 10: Modules and Crates
-- Module system and visibility
-- Separating modules into files
-- Using external crates (crates.io)
-- Creating library crates
-
-### Module 11: Generics and Traits
-- Generic types and functions
-- Defining and implementing traits
-- Trait bounds and where clauses
-- Standard library traits
-
-### Module 12: Lifetimes and Testing
-- Why lifetimes exist
-- Lifetime annotation syntax
-- Lifetime elision rules
-- Unit and integration tests
+- Iterators and iterator methods
+- Patterns and techniques (map, filter, fold)
 
 ---
 
 ## Optional Topics (Time Permitting)
+- Ownership and borrowing deep dive
+- Lifetimes
 - Smart pointers (Box, Rc, RefCell)
-- Concurrency basics (threads, channels)
-- Async/await introduction
-- Unsafe Rust overview
-
-## Recommended Prerequisites
-- Basic programming experience in any language
-- Familiarity with command line usage
+- Concurrency basics
+- Testing

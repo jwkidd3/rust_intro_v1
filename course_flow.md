@@ -1,36 +1,34 @@
-# Introduction to Rust - Course Flow
+# Rust Programming – Introduction (Part 1) - Course Flow
 
 ## 2-Day Schedule Overview
 
-### Day 1: Rust Fundamentals (Modules 1-6)
+### Day 1: Getting Started, Language Essentials, Organizing Code
 | Time | Module | Presentation | Lab | Duration |
 |------|--------|--------------|-----|----------|
-| 9:00 | 1 | Getting Started with Rust | Lab 1: Environment Setup | 20 min + 25 min |
-| 9:45 | 2 | Variables and Data Types | Lab 2: Variables and Data Types | 25 min + 30 min |
-| 10:40 | | *Break* | | 15 min |
-| 10:55 | 3 | Functions and Control Flow | Lab 3: Functions and Control Flow | 25 min + 30 min |
-| 11:50 | 4 | Ownership Basics | Lab 4: Ownership | 30 min + 30 min |
-| 12:50 | | *Lunch* | | 45 min |
-| 1:35 | 5 | References and Borrowing | Lab 5: References and Borrowing | 25 min + 30 min |
-| 2:30 | | *Break* | | 10 min |
-| 2:40 | 6 | Structs and Methods | Lab 6: Structs and Methods | 25 min + 30 min |
-| 3:35 | | Day 1 Review & Q&A | | 25 min |
+| 9:00 | 1 | Getting Started with Rust | Lab 1: Environment Setup | 25 min + 30 min |
+| 9:55 | 2a | Rust Language Essentials (Part 1) | Lab 2a: Variables and Types | 30 min + 35 min |
+| 11:00 | | *Break* | | 15 min |
+| 11:15 | 2b | Rust Language Essentials (Part 2) | Lab 2b: Functions and Control Flow | 30 min + 35 min |
+| 12:35 | | *Lunch* | | 45 min |
+| 1:20 | 2c | Rust Language Essentials (Part 3) | Lab 2c: Collections | 25 min + 30 min |
+| 2:15 | | *Break* | | 10 min |
+| 2:25 | 3 | Organizing Rust Code | Lab 3: Modules and Crates | 30 min + 35 min |
+| 3:30 | | Day 1 Review & Q&A | | 30 min |
 | 4:00 | | *Day 1 End* | | |
 
-### Day 2: Advanced Topics (Modules 7-12)
+### Day 2: Error Handling, Object Orientation, Functional Programming
 | Time | Module | Presentation | Lab | Duration |
 |------|--------|--------------|-----|----------|
-| 9:00 | 7 | Enums and Pattern Matching | Lab 7: Enums and Pattern Matching | 25 min + 30 min |
-| 9:55 | 8 | Error Handling | Lab 8: Error Handling | 25 min + 30 min |
-| 10:50 | | *Break* | | 15 min |
-| 11:05 | 9 | Collections and Iterators | Lab 9: Collections | 30 min + 30 min |
-| 12:05 | | *Lunch* | | 45 min |
-| 12:50 | 10 | Modules and Crates | Lab 10: Modules and Crates | 25 min + 30 min |
-| 1:45 | 11 | Generics and Traits | Lab 11: Generics and Traits | 30 min + 30 min |
-| 2:45 | | *Break* | | 10 min |
-| 2:55 | 12 | Lifetimes and Testing | Lab 12: Lifetimes and Testing | 30 min + 30 min |
-| 3:55 | | Course Wrap-up & Q&A | | 20 min |
-| 4:15 | | *Day 2 End* | | |
+| 9:00 | 4 | Error Handling | Lab 4: Error Handling | 30 min + 35 min |
+| 10:05 | 5a | Object Orientation (Part 1) | Lab 5a: Structs and Methods | 30 min + 35 min |
+| 11:10 | | *Break* | | 15 min |
+| 11:25 | 5b | Object Orientation (Part 2) | Lab 5b: Traits and Generics | 30 min + 35 min |
+| 12:30 | | *Lunch* | | 45 min |
+| 1:15 | 6a | Functional Programming (Part 1) | Lab 6a: Closures | 25 min + 30 min |
+| 2:10 | | *Break* | | 10 min |
+| 2:20 | 6b | Functional Programming (Part 2) | Lab 6b: Iterators | 30 min + 35 min |
+| 3:25 | | Course Wrap-up & Q&A | | 35 min |
+| 4:00 | | *Day 2 End* | | |
 
 ---
 
@@ -38,9 +36,9 @@
 
 | | Presentations | Labs | Breaks/Lunch | Total |
 |---|---------------|------|--------------|-------|
-| Day 1 | 2h 30min | 2h 55min | 1h 35min | 7h |
-| Day 2 | 2h 45min | 3h | 1h 30min | 7h 15min |
-| **Total** | **5h 15min** | **5h 55min** | **~3h** | **~14h** |
+| Day 1 | 2h 20min | 2h 45min | 1h 40min | 7h |
+| Day 2 | 2h 25min | 2h 50min | 1h 45min | 7h |
+| **Total** | **4h 45min** | **5h 35min** | **~3.5h** | **~14h** |
 
 ---
 
@@ -49,184 +47,177 @@
 ### Day 1
 
 #### Module 1: Getting Started with Rust
-**Presentation (20 min):**
-- Installing Rust and toolchain (rustup, cargo, rustc)
+**Presentation (25 min):**
+- What is Rust and why it matters
+- What can I do with Rust (use cases)
+- What tools do I need (rustup, cargo, rustc)
 - IDE setup and rust-analyzer
-- Hello World and Cargo basics
+- Hello World walkthrough
 
-**Lab 1: Environment Setup (25 min)**
+**Lab 1: Environment Setup (30 min)**
 - Install Rust using rustup
 - Configure IDE with rust-analyzer
 - Create a new project with `cargo new`
 - Build and run programs with Cargo
+- Explore project structure
 
 ---
 
-#### Module 2: Variables and Data Types
-**Presentation (25 min):**
+#### Module 2a: Rust Language Essentials (Part 1 - Types and Variables)
+**Presentation (30 min):**
 - Variables and mutability
 - Constants and shadowing
 - Scalar types (integers, floats, booleans, characters)
 - Compound types (tuples, arrays)
+- Type annotations and inference
 
-**Lab 2: Variables and Data Types (30 min)**
+**Lab 2a: Variables and Types (35 min)**
 - Declare mutable and immutable variables
 - Use constants and shadowing
-- Work with scalar and compound types
+- Work with scalar types
+- Create and access tuples and arrays
 - Apply type annotations
 
 ---
 
-#### Module 3: Functions and Control Flow
-**Presentation (25 min):**
-- Function parameters and return values
+#### Module 2b: Rust Language Essentials (Part 2 - Control Flow and Functions)
+**Presentation (30 min):**
+- Conditional logic (if/else expressions)
+- Iteration (loop, while, for)
+- Functions and parameters
+- Return values
 - Statements vs expressions
-- if/else conditional expressions
-- Loops: loop, while, for
 
-**Lab 3: Functions and Control Flow (30 min)**
+**Lab 2b: Functions and Control Flow (35 min)**
 - Write functions with parameters and returns
 - Use if/else as expressions
-- Implement various loop types
+- Implement loop, while, and for loops
+- Iterate over ranges and collections
+- Use break and continue
+
+---
+
+#### Module 2c: Rust Language Essentials (Part 3 - Collections)
+**Presentation (25 min):**
+- Vec<T> - growable arrays
+- String and &str
+- HashMap<K, V>
+- Common collection operations
+
+**Lab 2c: Collections (30 min)**
+- Create and manipulate vectors
+- Work with String operations
+- Use HashMap for key-value storage
 - Iterate over collections
 
 ---
 
-#### Module 4: Ownership Basics
+#### Module 3: Organizing Rust Code
 **Presentation (30 min):**
-- What is ownership and why it matters
-- The three ownership rules
-- Move semantics and Copy trait
-- Stack vs heap allocation
+- Modules and visibility (pub)
+- Packages and crates
+- The Cargo dependency manager
+- Using external crates (crates.io)
+- Project structure best practices
 
-**Lab 4: Ownership (30 min)**
-- Understand move semantics
-- Use Clone for deep copies
-- Track ownership through function calls
-- Identify ownership errors
-
----
-
-#### Module 5: References and Borrowing
-**Presentation (25 min):**
-- References as non-owning pointers
-- Mutable vs immutable references
-- Borrowing rules
-- The slice type
-
-**Lab 5: References and Borrowing (30 min)**
-- Create immutable and mutable references
-- Apply borrowing rules
-- Work with string and array slices
-- Pass references to functions
-
----
-
-#### Module 6: Structs and Methods
-**Presentation (25 min):**
-- Defining and instantiating structs
-- Methods with impl blocks
-- Associated functions
-
-**Lab 6: Structs and Methods (30 min)**
-- Define structs with named fields
-- Implement methods using impl
-- Create associated functions (constructors)
-- Use tuple structs
+**Lab 3: Modules and Crates (35 min)**
+- Create modules in a single file
+- Split modules into multiple files
+- Control visibility with pub
+- Add external crate dependencies
+- Build a library crate
 
 ---
 
 ### Day 2
 
-#### Module 7: Enums and Pattern Matching
-**Presentation (25 min):**
-- Enum definitions with data
-- Pattern matching with match
-- The Option enum
-- if let for concise matching
+#### Module 4: Error Handling
+**Presentation (30 min):**
+- Overview of error handling philosophy
+- Recoverable errors with Result<T, E>
+- Unrecoverable errors with panic!
+- The ? operator for propagation
+- unwrap, expect, and alternatives
 
-**Lab 7: Enums and Pattern Matching (30 min)**
-- Define enums with variants
-- Use match for exhaustive handling
-- Work with Option<T>
-- Apply if let syntax
-
----
-
-#### Module 8: Error Handling
-**Presentation (25 min):**
-- Recoverable vs unrecoverable errors
-- panic! and when to use it
-- Result<T, E> and the ? operator
-
-**Lab 8: Error Handling (30 min)**
-- Use panic!, unwrap, and expect
-- Handle errors with Result
+**Lab 4: Error Handling (35 min)**
+- Use panic! for unrecoverable errors
+- Handle errors with Result and match
 - Propagate errors with ?
+- Use unwrap and expect appropriately
 - Create functions returning Result
 
 ---
 
-#### Module 9: Collections and Iterators
+#### Module 5a: Object Orientation (Part 1 - Structs and Methods)
 **Presentation (30 min):**
-- Vec<T>, String, and HashMap
-- Closures
-- Iterator trait and methods
+- Defining structures (structs)
+- Tuple structs and unit structs
+- Implementing functionality (impl blocks)
+- Methods with self, &self, &mut self
+- Associated functions (constructors)
 
-**Lab 9: Collections (30 min)**
-- Create and manipulate vectors
-- Work with String and &str
-- Use HashMap for key-value storage
-- Chain iterator methods with closures
+**Lab 5a: Structs and Methods (35 min)**
+- Define structs with named fields
+- Create tuple structs
+- Implement methods using impl
+- Create associated functions
+- Use derive for Debug, Clone
 
 ---
 
-#### Module 10: Modules and Crates
-**Presentation (25 min):**
-- Module system and visibility
-- Separating modules into files
-- Using external crates
-
-**Lab 10: Modules and Crates (30 min)**
-- Organize code into modules
-- Control visibility with pub
-- Add external crate dependencies
-- Create a library crate
-
----
-
-#### Module 11: Generics and Traits
+#### Module 5b: Object Orientation (Part 2 - Traits and Generics)
 **Presentation (30 min):**
-- Generic types and functions
-- Defining and implementing traits
+- Specifying traits
+- Implementing traits for types
 - Trait bounds
-- Standard library traits
+- Generic types and functions
+- Design patterns in Rust (Builder, Newtype)
 
-**Lab 11: Generics and Traits (30 min)**
-- Write generic functions and structs
-- Define and implement traits
+**Lab 5b: Traits and Generics (35 min)**
+- Define custom traits
+- Implement traits for structs
+- Write generic functions
 - Use trait bounds
-- Implement Display, Debug, Clone
+- Implement common patterns
 
 ---
 
-#### Module 12: Lifetimes and Testing
-**Presentation (30 min):**
-- Why lifetimes exist
-- Lifetime annotation syntax
-- Unit and integration tests
+#### Module 6a: Functional Programming (Part 1 - Closures)
+**Presentation (25 min):**
+- Concepts of functional programming
+- Anonymous functions
+- Closures and syntax
+- Capture modes (borrow, mutable borrow, move)
 
-**Lab 12: Lifetimes and Testing (30 min)**
-- Add lifetime annotations
-- Write unit tests with #[test]
-- Create integration tests
+**Lab 6a: Closures (30 min)**
+- Write basic closures
+- Use closures with different capture modes
+- Pass closures to functions
+- Store closures in variables
+
+---
+
+#### Module 6b: Functional Programming (Part 2 - Iterators)
+**Presentation (30 min):**
+- Iterator trait and methods
+- Iterator adapters (map, filter, take, skip)
+- Consuming iterators (collect, sum, fold)
+- Chaining operations
+- Patterns and techniques
+
+**Lab 6b: Iterators (35 min)**
+- Create and consume iterators
+- Use map and filter
+- Chain iterator methods
+- Use fold for accumulation
+- Process data with functional style
 
 ---
 
 ## Notes for Instructors
 
 - **Labs are priority** - If running short on time, trim presentation not lab
-- **Ownership/Borrowing:** Modules 4-5 are critical - allow extra lab time if needed
-- **Live coding:** During presentations, keep examples brief; students will practice in labs
+- **Module 2 is split into 3 parts** - Can combine if students are experienced
+- **Ownership concepts** - Introduce briefly as needed; detailed coverage is optional
+- **Design patterns** - Keep examples practical and simple
 - **Breaks:** Can be shortened by 5 min if needed
-- **Optional Topics:** Smart pointers, concurrency - only if significantly ahead

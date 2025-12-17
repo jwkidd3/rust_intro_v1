@@ -1,45 +1,44 @@
-# Lab 1: Environment Setup and First Rust Program
+# Lab 1: Environment Setup
 
-## Duration: 20 minutes
+**Duration:** 30 minutes
 
 ## Objectives
+
 - Install Rust using rustup
-- Configure your IDE with rust-analyzer
-- Create your first Rust project with Cargo
-- Build and run a Rust program
+- Configure VS Code with rust-analyzer
+- Create your first Cargo project
+- Build and run a program
+- Explore Cargo commands
 
 ## Prerequisites
-- Internet connection for installation
-- IDE of your choice (VS Code recommended)
-- Terminal/Command Prompt access
 
-## Part 1: Installing Rust (10 minutes)
+- Computer with internet access
+- Administrator privileges for software installation
 
-### Step 1: Install Rust via rustup
+---
 
-**macOS/Linux:**
+## Exercise 1: Install Rust (10 min)
+
+### Step 1: Install rustup
+
+**macOS / Linux:**
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 **Windows:**
-Download and run `rustup-init.exe` from https://rustup.rs
+1. Download rustup-init.exe from https://rustup.rs
+2. Run the installer
+3. Follow the prompts (accept defaults)
 
-### Step 2: Follow the Installation Prompts
-
-Select option 1 for default installation:
-```
-1) Proceed with installation (default)
-```
-
-### Step 3: Configure Your Shell
+### Step 2: Configure your shell
 
 After installation, either restart your terminal or run:
 ```bash
 source $HOME/.cargo/env
 ```
 
-### Step 4: Verify Installation
+### Step 3: Verify installation
 
 ```bash
 rustc --version
@@ -47,40 +46,60 @@ cargo --version
 rustup --version
 ```
 
-**Expected Output:**
-```
-rustc 1.XX.0 (commit hash YYYY-MM-DD)
-cargo 1.XX.0 (commit hash YYYY-MM-DD)
-rustup 1.XX.0 (commit hash YYYY-MM-DD)
-```
+You should see version numbers for each tool.
 
-### Step 5: Install IDE Extension
+---
 
-**VS Code:**
+## Exercise 2: Set Up VS Code (5 min)
+
+### Step 1: Install VS Code
+
+Download from https://code.visualstudio.com/ if not already installed.
+
+### Step 2: Install rust-analyzer extension
+
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
 3. Search for "rust-analyzer"
 4. Click Install
 
-## Part 2: First Rust Project (10 minutes)
+### Step 3: Verify extension
 
-### Exercise 1: Create a New Project
+The extension will activate automatically when you open a Rust file.
+
+---
+
+## Exercise 3: Create Your First Project (10 min)
+
+### Step 1: Create a new project
 
 ```bash
 cargo new hello_rust
 cd hello_rust
 ```
 
-### Exercise 2: Explore Project Structure
+### Step 2: Explore project structure
 
+```bash
+ls -la
+```
+
+You should see:
 ```
 hello_rust/
-├── Cargo.toml    # Project manifest (dependencies, metadata)
+├── Cargo.toml
 └── src/
-    └── main.rs   # Main source file
+    └── main.rs
 ```
 
-**View `Cargo.toml`:**
+### Step 3: Examine Cargo.toml
+
+Open `Cargo.toml` in VS Code:
+```bash
+code .
+```
+
+Notice the package metadata:
 ```toml
 [package]
 name = "hello_rust"
@@ -90,127 +109,127 @@ edition = "2021"
 [dependencies]
 ```
 
-**View `src/main.rs`:**
+### Step 4: Examine main.rs
+
+Open `src/main.rs`:
 ```rust
 fn main() {
     println!("Hello, world!");
 }
 ```
 
-### Exercise 3: Build and Run
+---
 
-**Method 1: Build then Run**
+## Exercise 4: Build and Run (5 min)
+
+### Step 1: Build the project
+
 ```bash
 cargo build
+```
+
+Notice the `target/debug/` directory was created.
+
+### Step 2: Run the executable directly
+
+```bash
 ./target/debug/hello_rust
 ```
 
-**Method 2: Build and Run (Combined)**
+### Step 3: Build and run in one command
+
 ```bash
 cargo run
 ```
 
-**Expected Output:**
-```
-Hello, world!
-```
-
-### Exercise 4: Modify the Program
-
-Edit `src/main.rs`:
-
-```rust
-fn main() {
-    println!("Hello, Rust!");
-    println!("Welcome to the Rust programming language.");
-
-    // This is a comment
-    println!("Learning Rust is fun!");
-}
-```
-
-Run the modified program:
-```bash
-cargo run
-```
-
-**Expected Output:**
-```
-Hello, Rust!
-Welcome to the Rust programming language.
-Learning Rust is fun!
-```
-
-### Exercise 5: Use cargo check
+### Step 4: Check for errors without building
 
 ```bash
 cargo check
 ```
 
-This compiles but doesn't produce an executable - faster for checking code validity.
+This is faster than `cargo build` - useful during development.
 
-### Exercise 6: Create a Release Build
+### Step 5: Build for release
 
 ```bash
 cargo build --release
 ```
 
-The optimized binary is in `./target/release/hello_rust`
+Check `target/release/` for the optimized binary.
 
-## Verification Steps
+---
 
-### Checklist
-- [ ] Rust installed successfully (`rustc --version` works)
-- [ ] Cargo installed successfully (`cargo --version` works)
-- [ ] rust-analyzer extension installed in IDE
-- [ ] Created hello_rust project with `cargo new`
-- [ ] Program compiles and runs with `cargo run`
-- [ ] Modified program outputs custom messages
-- [ ] Understand difference between `cargo build` and `cargo build --release`
+## Exercise 5: Modify and Experiment (Bonus)
 
-## Lab Questions
+### Step 1: Modify the program
 
-1. What is the purpose of rustup?
-2. What file contains your project's dependencies?
-3. What is the difference between `cargo build` and `cargo build --release`?
-4. What does `cargo check` do?
+Edit `src/main.rs`:
+```rust
+fn main() {
+    println!("Hello, Rust!");
+    println!("Welcome to the course!");
 
-## Answers
+    let name = "Student";
+    println!("Hello, {}!", name);
+}
+```
 
-1. **rustup** is Rust's toolchain installer and version manager. It installs and manages Rust compilers, cargo, and other tools.
+### Step 2: Run the modified program
 
-2. **Cargo.toml** contains project metadata and dependencies.
+```bash
+cargo run
+```
 
-3. `cargo build` creates a debug build with no optimizations (faster compilation). `cargo build --release` creates an optimized build for production (slower compilation, faster execution).
+### Step 3: Try introducing an error
 
-4. `cargo check` quickly checks if code compiles without producing an executable - useful for rapid feedback during development.
+Change the code to have a typo:
+```rust
+fn main() {
+    printl!("Hello");  // Wrong macro name
+}
+```
+
+Run `cargo check` and observe the error message.
+
+Fix the error and verify with `cargo run`.
+
+---
+
+## Verification Checklist
+
+- [ ] `rustc --version` shows installed version
+- [ ] `cargo --version` shows installed version
+- [ ] VS Code has rust-analyzer extension installed
+- [ ] Created `hello_rust` project with `cargo new`
+- [ ] Successfully ran `cargo build`
+- [ ] Successfully ran `cargo run`
+- [ ] Successfully ran `cargo check`
+- [ ] Modified the program and re-ran it
+
+---
 
 ## Common Issues
 
-**Issue: "command not found: cargo"**
-```
-Solution: Restart your terminal or run: source $HOME/.cargo/env
-```
+**"command not found: cargo"**
+- Restart your terminal or run `source $HOME/.cargo/env`
 
-**Issue: rust-analyzer not working in VS Code**
-```
-Solution:
-1. Ensure you opened the project folder (not individual files)
-2. Restart VS Code
-3. Check that rust-analyzer extension is enabled
-```
+**rust-analyzer not working**
+- Make sure you opened the project folder (not just a file)
+- Try restarting VS Code
 
-## Next Steps
+**Permission denied on macOS/Linux**
+- The curl command should work without sudo
+- If issues persist, check https://rustup.rs for alternatives
 
-In Lab 2, you will:
-- Learn about variables and mutability
-- Work with Rust's data types
-- Understand type inference and annotations
+---
 
-## Completion
+## Summary
 
-You have completed Lab 1 when you can:
-- Verify Rust installation with `rustc --version`
-- Create a new project with `cargo new`
-- Build and run a program with `cargo run`
-- Make changes and see them reflected in output
+You have successfully:
+- Installed the Rust toolchain using rustup
+- Set up VS Code with rust-analyzer
+- Created and built a Rust project with Cargo
+- Learned essential Cargo commands
+
+**Next:** Lab 2a - Variables and Types

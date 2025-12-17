@@ -1,25 +1,23 @@
 # Introduction to Rust - Labs
 
-This directory contains all 12 hands-on labs for the Introduction to Rust 2-day course.
+This directory contains all hands-on labs for the Introduction to Rust 2-day course, aligned with the 6-module structure.
 
 ## Lab Overview
 
 | Lab | Title | Duration | Topics |
 |-----|-------|----------|--------|
-| 01 | Environment Setup | 20 min | Install Rust, Cargo basics, first project |
-| 02 | Variables and Data Types | 25 min | Variables, mutability, scalar/compound types |
-| 03 | Functions and Control Flow | 25 min | Functions, if/else, loops |
-| 04 | Ownership Basics | 25 min | Ownership rules, move semantics, Copy/Clone |
-| 05 | References and Borrowing | 25 min | References, borrowing rules, slices |
-| 06 | Structs and Methods | 25 min | Structs, impl blocks, associated functions |
-| 07 | Enums and Pattern Matching | 25 min | Enums, match, Option, if let |
-| 08 | Error Handling | 25 min | panic!, Result, ? operator |
-| 09 | Collections and Iterators | 25 min | Vec, String, HashMap, closures, iterators |
-| 10 | Modules and Crates | 25 min | Module system, visibility, external crates |
-| 11 | Generics and Traits | 25 min | Generic types, trait definitions, trait bounds |
-| 12 | Lifetimes and Testing | 30 min | Lifetime annotations, unit/integration tests |
+| 01 | Environment Setup | 30 min | Install Rust, Cargo basics, first project |
+| 02a | Variables and Types | 35 min | Variables, mutability, scalar/compound types, ownership |
+| 02b | Functions and Control Flow | 35 min | Functions, if/else, loops |
+| 02c | Collections | 30 min | Vectors, Strings, HashMaps |
+| 03 | Modules and Crates | 35 min | Module system, visibility, external crates |
+| 04 | Error Handling | 35 min | panic!, Result, ? operator |
+| 05a | Structs and Methods | 35 min | Structs, impl blocks, associated functions |
+| 05b | Traits and Generics | 35 min | Traits, generics, trait bounds, patterns |
+| 06a | Closures | 30 min | Closure syntax, capture modes, Fn traits |
+| 06b | Iterators | 35 min | Iterator methods, map, filter, fold |
 
-**Total Lab Time:** ~5 hours
+**Total Lab Time:** ~5.5 hours
 
 ## Lab Descriptions
 
@@ -34,124 +32,109 @@ Set up your Rust development environment:
 
 ---
 
-### Lab 2: Variables and Data Types
-**File:** `lab02_variables_data_types.md`
+### Lab 2a: Variables and Types
+**File:** `lab02a_variables_types.md`
 
-Learn Rust's type system:
+Learn Rust's type system and ownership:
 - Mutable vs immutable variables
 - Constants and shadowing
 - Integer, float, boolean, char types
 - Tuples and arrays
+- Ownership basics and move semantics
 
 ---
 
-### Lab 3: Functions and Control Flow
-**File:** `lab03_functions_control_flow.md`
+### Lab 2b: Functions and Control Flow
+**File:** `lab02b_functions_control_flow.md`
 
 Master Rust control structures:
 - Function parameters and returns
 - Statements vs expressions
 - if/else as expressions
 - loop, while, and for loops
+- References and borrowing
 
 ---
 
-### Lab 4: Ownership Basics
-**File:** `lab04_ownership.md`
+### Lab 2c: Collections
+**File:** `lab02c_collections.md`
 
-Understand Rust's unique ownership system:
-- The three ownership rules
-- Move semantics with heap data
-- Copy vs Clone traits
-- Ownership in function calls
-
----
-
-### Lab 5: References and Borrowing
-**File:** `lab05_references_borrowing.md`
-
-Work with references safely:
-- Immutable and mutable references
-- Borrowing rules
-- String and array slices
-- The slice type &str
-
----
-
-### Lab 6: Structs and Methods
-**File:** `lab06_structs_methods.md`
-
-Structure your data:
-- Defining structs
-- Field init shorthand
-- Implementing methods with impl
-- Associated functions (constructors)
-
----
-
-### Lab 7: Enums and Pattern Matching
-**File:** `lab07_enums_pattern_matching.md`
-
-Handle variants and patterns:
-- Enum definitions with data
-- Match expressions
-- Option<T> for nullable values
-- if let for concise matching
-
----
-
-### Lab 8: Error Handling
-**File:** `lab08_error_handling.md`
-
-Handle errors gracefully:
-- panic! for unrecoverable errors
-- Result<T, E> for recoverable errors
-- The ? operator
-- Custom error types
-
----
-
-### Lab 9: Collections and Iterators
-**File:** `lab09_collections.md`
-
-Process data efficiently:
+Work with Rust's collection types:
 - Vec<T> for dynamic arrays
 - String manipulation
 - HashMap for key-value storage
-- Iterator methods and closures
+- Iterating over collections
 
 ---
 
-### Lab 10: Modules and Crates
-**File:** `lab10_modules_crates.md`
+### Lab 3: Modules and Crates
+**File:** `lab03_modules_crates.md`
 
 Organize your code:
 - Module system and visibility
 - Separating into files
-- Using external crates
-- Creating library crates
+- Using external crates from crates.io
+- Cargo.toml configuration
 
 ---
 
-### Lab 11: Generics and Traits
-**File:** `lab11_generics_traits.md`
+### Lab 4: Error Handling
+**File:** `lab04_error_handling.md`
 
-Write reusable code:
-- Generic functions and structs
+Handle errors gracefully:
+- panic! for unrecoverable errors
+- Result<T, E> for recoverable errors
+- The ? operator for propagation
+- unwrap, expect, and unwrap_or
+
+---
+
+### Lab 5a: Structs and Methods
+**File:** `lab05a_structs_methods.md`
+
+Structure your data:
+- Defining structs with named fields
+- Tuple structs
+- Implementing methods with impl
+- Associated functions (constructors)
+- Debug, Clone, PartialEq derives
+
+---
+
+### Lab 5b: Traits and Generics
+**File:** `lab05b_traits_generics.md`
+
+Write reusable, polymorphic code:
 - Defining and implementing traits
-- Trait bounds
-- Standard library traits
+- Default implementations
+- Generic functions and structs
+- Trait bounds and where clauses
+- Builder and Newtype patterns
 
 ---
 
-### Lab 12: Lifetimes and Testing
-**File:** `lab12_lifetimes_testing.md`
+### Lab 6a: Closures
+**File:** `lab06a_closures.md`
 
-Ensure validity and correctness:
-- Lifetime annotations
-- Lifetime elision rules
-- Writing unit tests
-- Integration tests
+Master functional programming with closures:
+- Closure syntax variations
+- Capturing environment variables
+- Move keyword for ownership transfer
+- Fn, FnMut, FnOnce traits
+- Closures as function parameters
+
+---
+
+### Lab 6b: Iterators
+**File:** `lab06b_iterators.md`
+
+Process data functionally:
+- Creating iterators (iter, iter_mut, into_iter)
+- map and filter transformations
+- take, skip, enumerate, zip
+- find, any, all predicates
+- fold for accumulation
+- sum, product, count, max, min
 
 ---
 
@@ -174,20 +157,19 @@ Ensure validity and correctness:
 2. **Progress sequentially** - Labs build on each other
 3. **Complete all exercises** - Don't skip ahead
 4. **Run the code** - Type it, don't copy-paste
-5. **Answer the questions** - Test your understanding
+5. **Use the verification checklist** - Confirm completion
 
 ## Lab Format
 
 Each lab includes:
 - **Duration** - Expected completion time
 - **Objectives** - Learning goals
-- **Prerequisites** - Required knowledge
-- **Exercises** - Hands-on coding tasks
-- **Verification** - Checklist to confirm completion
-- **Questions** - Test your understanding
-- **Answers** - Explanations
-- **Common Issues** - Troubleshooting
-- **Next Steps** - Preview of next lab
+- **Prerequisites** - Required prior labs
+- **Setup** - Project creation steps
+- **Exercises** - Hands-on coding tasks with solutions
+- **Challenge Exercise** - Optional bonus work
+- **Verification Checklist** - Confirm all skills practiced
+- **Summary** - Key takeaways
 
 ## Running the Labs
 
@@ -206,7 +188,7 @@ cargo run
 2. **Read error messages** - Rust's compiler is helpful
 3. **Experiment** - Try variations of examples
 4. **Use `cargo check`** - Fast feedback without full compile
-5. **Ask questions** - Review the Q&A sections
+5. **Complete the checklist** - Verify each skill
 
 ## Common Commands
 
