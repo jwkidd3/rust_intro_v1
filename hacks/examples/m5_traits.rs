@@ -13,13 +13,13 @@ trait Summary {
 struct Article {
     title: String,
     author: String,
-    content: String,
+    _content: String,
 }
 
 // Another struct that will implement Summary differently
 struct Tweet {
     username: String,
-    content: String,
+    _content: String,
 }
 
 // Implement the Summary trait for Article
@@ -32,7 +32,7 @@ impl Summary for Article {
 // Implement the Summary trait for Tweet
 impl Summary for Tweet {
     fn summarize(&self) -> String {
-        format!("@{}: {}", self.username, self.content)
+        format!("@{}: {}", self.username, self._content)
     }
 }
 
@@ -45,12 +45,12 @@ fn main() {
     let article = Article {
         title: String::from("Breaking News"),
         author: String::from("John"),
-        content: String::from("Something happened today..."),
+        _content: String::from("Something happened today..."),
     };
 
     let tweet = Tweet {
         username: String::from("rustacean"),
-        content: String::from("Hello Rust world!"),
+        _content: String::from("Hello Rust world!"),
     };
 
     // Both types can use the same method name

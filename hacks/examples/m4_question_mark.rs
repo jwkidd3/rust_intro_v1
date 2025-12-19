@@ -24,7 +24,7 @@ fn read_file() -> Result<String, io::Error> {
 }
 
 // This is equivalent to the above, but more verbose
-fn read_file_verbose() -> Result<String, io::Error> {
+fn _read_file_verbose() -> Result<String, io::Error> {
     let file_result = File::open("hello.txt");
     let mut file = match file_result {
         Ok(f) => f,
